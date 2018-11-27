@@ -1,0 +1,4 @@
+<ul class="nav nav-tabs">
+	<li #if($!{tab} == "keyvalues") class="active"    #end>  <a #if($!{tab} == "keyvalues")   href="#" #else href="/admin/i_app_query/keyvalues"  #end>KV配置</a></li>
+</ul>
+

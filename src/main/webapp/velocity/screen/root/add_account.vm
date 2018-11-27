@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+	<!-- Add Title -->
+    <title>添加帐户</title>
+    
+	#parse("control/cmn/admin_top_assets.vm")
+	
+	<!-- Add this page owned css -->
+	
+</head>
+
+<body>
+    <div id="wrapper">
+    
+    	#parse("control/cmn/admin_top_nav.vm")
+    	#parse("control/cmn/admin_left.vm")
+    	
+        <div id="page-wrapper">
+        	 <!-- tab -->
+             #parse("control/tab/right.vm")
+        
+        	 <div style="margin-left:1px;padding-top:15px;">
+	 			 <a id="create_account" href="#" class="btn btn-primary btn-large">添加新帐号</a>
+	 		 </div>
+			 	
+		     <div style="margin-top:20px;">
+	               	<table class="table table-bordered" id="all_accounts" style="font-size:10px;">
+	               		 <tr class="error">
+	               		 	<th>系统帐户</th>
+							<th>权限</th>
+							<th>备注</th>
+							<th>创建时间</th>
+							<th>操作</th>
+							<th>修改密码</th>
+	               		 </tr>
+	               		 #if($accounts)
+	               		 	#set($i = 0)
+	               		 	#foreach($ele in $accounts)
+			               		 <tr #if($i % 2 == 0) class="success" #else class="warning" #end>
+			               		    <td>$!{ele.nick}</td>  
+								    <td>
+								       #if($ele.rights)
+								    	 #foreach($right in $ele.rights)
+								    	 	$!{right}&nbsp;&nbsp;
+								    	 #end
+								       #end
+								    </td>  
+								    <td>$!{ele.note}</td>
+								    <td>$!{ele.ctime}</td>  
+								    <td>
+								    	#if($!{ele.nick} != "root")
+								    	<a data-nick="$!{ele.nick}" data-action="del_account" data-nick="$!{ele.nick}" href="#">删除帐户</a>
+								    	<a data-nick="$!{ele.nick}" data-action="del_userright" href="#" style="margin-left:20px;">删除权限</a>
+								    	<a data-nick="$!{ele.nick}" data-action="add_userright" href="#" style="margin-left:20px;">增加权限</a>
+								    	#end
+								    </td>
+								    <td><a data-nick="$!{ele.nick}" data-action="edit_password" href="#">更改密码</td>  
+								 </tr>
+								 #set($i = $i + 1)
+							 #end
+						 #end
+				     </table> 
+				</div>
+                	
+                <!-- 新建dialog -->
+				<div class="modal-dialog" id="create_account_dialog" style="display:none;position:fixed;z-index:1000;top:150px;margin-left:235px;">  
+			            <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-action="modal-close">&times;</a>
+                                <h3>添加新帐号</h3>
+                            </div>
+			                <div class="modal-body">  
+			                    <form action="#" method="post" accept-charset="utf-8">   
+			                        <table class="table">
+			                            <tr>  
+			                                <td>帐户名</td>  
+			                                <td><input type="text" name="name" id="account_name" value="" class="form-control" placeholder="请输帐户名" /></td>  
+			                            </tr>
+			                            <tr>  
+			                                <td>密码</td>  
+			                                <td><input type="text" name="name" id="account_password" value="" class="form-control" placeholder="请输入密码" /></td>  
+			                            </tr>
+			                            <tr>  
+			                                <td>手机号</td>  
+			                                <td><input type="text" name="name" id="account_phone" value="" class="form-control" placeholder="请输入手机号" /></td>  
+			                            </tr>
+			                            <tr>  
+			                                <td>Tid</td>  
+			                                <td><input type="text" name="name" id="account_tid" value="" class="form-control" placeholder="请输入Tid" /></td>  
+			                            </tr>
+			                            <tr>  
+			                                <td>备注</td>  
+			                                <td><input type="text" name="name" id="account_note" value="" class="form-control" placeholder="备注" /></td>  
+			                            </tr>
+			                            <tr>
+			                            	<td></td>
+			                            	<td id="error_msg" style="color:red;"></td>
+			                            </tr>  
+			                            <tr>
+			                            	<td></td>  
+			                                <td><input type="button" name="login" value="新建" id="create_account_btn"class="btn btn-primary btn-lg btn-block" /></td>  
+			                            </tr>  
+			                        </table>  
+			                    </form>  
+			                </div> 
+			          </div>  
+			    </div>
+			    
+			    <!-- 更改密码dialog -->
+		        <div class="modal fade" role="dialog" id="reset_password" style="width:400px;top:150px;margin-left:650px;">  
+		            <div class="modal-content">  
+		                <div class="modal-header"> 
+		                    <a class="close" data-dismiss="modal">&times;</a> 
+		                    <h3>更改密码</h3>   
+		                </div>  
+		                <div class="modal-body">  
+		                    <form action="#" method="post" accept-charset="utf-8">   
+		                        <table class="table">  
+		                            <tr>  
+		                                <td>新密码</td>  
+		                                <td><input type="text" name="phone" id="reset_password_new" value="" class="form-control" placeholder="请输入新密码" /></td>  
+		                            </tr>  
+		                            <tr>
+		                            	<td></td>  
+		                                <td><input type="button" name="login" value="修改" id="reset_password_btn"class="btn btn-primary btn-lg btn-block" /></td>  
+		                            </tr>  
+		                        </table>  
+		                    </form>  
+		                </div> 
+		          </div>
+             	</div>
+			    
+			    <!-- 添加用户权限 -->
+			    <div id="add_userright_dialog" class="modal-dialog" style="position:fixed;z-index:1000;margin-left:360px;display:none;width:400px;top:200px;">
+			        	<div class="modal-content">
+			        		<div class="modal-header"> 
+			                	<a class="close" data-action="modal-close">&times;</a>
+			                    <h3>添加用户权限</h3>   
+			                </div>
+			        		<p id="add_userright_data" data-nick="" ></p>
+					        <div class="modal-body">  
+			                    <form action="#" method="post" accept-charset="utf-8">   
+			                        <table class="table">
+			                            <tr>  
+			                                <td><p style="margin-top:6px;">新增用户权限</p></td>  
+			                                <td><input type="text" name="name" id="add_userright_name" value="" class="form-control" placeholder="请输入新增权限名" /></td>  
+			                            </tr>
+			                            <tr>  
+			                                <td><p style="margin-top:6px;"><a href="#" id="get_auto_authcode">获取动态码</a></p></td>  
+			                                <td><input type="text" name="name" id="add_userright_code" value="" class="form-control" placeholder="请输入新增权限名" /></td>  
+			                            </tr>
+			                            <tr>
+			                            	<td></td>
+			                            	<td id="add_userright_error_msg" style="color:red;"></td>
+			                            </tr>  
+			                            <tr>
+			                            	<td></td>  
+			                                <td><input type="button" name="login" value="添加" id="add_userright_btn" class="btn btn-primary btn-lg btn-block" /></td>
+			                            </tr>  
+			                        </table>  
+			                    </form>  
+			                </div> 
+				        </div>
+				</div>
+				    
+				<!-- 删除用户权限 -->
+				<div id="del_userright_dialog" class="modal-dialog" style="position:fixed;z-index:1000;margin-left:360px;display:none;width:400px;top:200px;">
+			        	<div class="modal-content">
+			        		<div class="modal-header"> 
+			                	<a class="close" data-action="modal-close">&times;</a>
+			                    <h3>删除用户权限</h3>   
+			                </div>
+			        		<p id="del_userright_data" data-nick="" ></p>
+					        <div class="modal-body">  
+			                    <form action="#" method="post" accept-charset="utf-8">   
+			                        <table class="table">
+			                            <tr>  
+			                                <td><p style="margin-top:6px;">删除用户权限</p></td>  
+			                                <td><input type="text" name="name" id="del_userright_name" value="" class="form-control" placeholder="请输入要删除的权限名" /></td>  
+			                            </tr>
+			                            <tr>
+			                            	<td></td>
+			                            	<td id="del_userright_error_msg" style="color:red;"></td>
+			                            </tr>  
+			                            <tr>
+			                            	<td></td>  
+			                                <td><input type="button" name="login" value="删除" id="del_userright_btn"class="btn btn-primary btn-lg btn-block" /></td>  
+			                            </tr>  
+			                        </table>  
+			                    </form>  
+			                </div> 
+				        </div>
+				</div>
+        </div>
+    </div>
+
+	#parse("control/cmn/admin_footer_assets.vm")
+	
+	<!-- Add this page owned js -->
+	<script type="text/javascript" src="/assets/js/live/right.js?t=20170515"></script>
+	
+	 <script type="text/javascript">
+    	$("#get_auto_authcode").on('click',function(){
+    		event.preventDefault();
+    		sendAuthcodev2(6);
+    		return false;
+    	});
+    </script>
+</body>
+</html>

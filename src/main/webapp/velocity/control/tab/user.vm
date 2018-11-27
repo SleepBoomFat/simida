@@ -1,0 +1,4 @@
+<ul class="nav nav-tabs">
+	<li #if($!{tab} == "user_query") class="active"    #end>  <a #if($!{tab} == "user_query")   href="#" #else href="/admin/i_user_query/user_query"  #end>用户查询</a></li>
+</ul>
+

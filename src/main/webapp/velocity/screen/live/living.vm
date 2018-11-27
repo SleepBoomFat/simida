@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+	<!-- Add Title -->
+    <title>直播台-$!{live.title}</title>
+    
+	#parse("control/cmn/admin_top_assets.vm")
+	
+	<!-- Add this page owned css -->
+	
+</head>
+
+<body>
+    <div id="wrapper">
+    	#parse("screen/live/living_left.vm")
+    	
+        <div id="page-wrapper" style="padding:0px;width:59%;">
+            <div class="container-fluid">
+                <!-- Add your page content here -->
+                #if($currentTopic)
+                	<!-- tips -->
+                	#if($currentTopic.tips)
+                		<h4 style="text-align:center;">奖金类型：#if($!{currentTopic.topicType} == 1) 全场均分(点击图片即可发送) #elseif($!{currentTopic.topicType} == 2) 一人独得 #else Unkown #end</h4>
+                		<div style="border:1px dashed #ccc;margin:0 auto;text-align:center;">
+	                		#foreach($ele in $currentTopic.tips)
+			                	<img src="$!{ele}" data-action="sendtip" data-topicId="$!{currentTopic.topicId}" style="width:240px;height:160px;border:1px solid #ccc;margin:8px 0 8px 8px;"/>
+		                	#end
+	                	</div>
+                	#end
+                	
+                	<!-- control -->
+                	<div style="margin-top:20px;" data-topicId="$!{currentTopic.topicId}">
+                		<a href="#" class="btn btn-default navbar-btn chour" style="width:200px;margin-left:0px;"  data-action="answer">开始答题</a>
+                		<a href="#" class="btn btn-default navbar-btn chour" style="width:200px;margin-left:15px;" data-action="showtopicresult">结算并显示本轮得奖结果</a>
+                		<a href="#" class="btn btn-default navbar-btn chour" style="width:200px;margin-left:15px;" data-action="finishtopic">结束本轮</a>
+                		<br/>
+                		<br/>
+                		<a href="#" class="btn btn-default navbar-btn chour" style="width:200px;margin-left:0px;" data-action="showliveresult">显示本次直播黄金大脑榜</a>
+                        <a href="#" class="btn btn-default navbar-btn chour" style="width:200px;margin-left:15px;" data-action="finishlive">结束直播</a>
+
+					</div>
+                #else
+                	<h2 style="text-align:center;margin-top:150px;">没有更多的题目了</h2>
+                #end
+            </div>
+        </div>
+        #parse("screen/live/living_right.vm")
+    </div>
+
+	<script type="text/javascript" src="/assets/js/lib/ajaxupload.3.5.js"></script>
+	<script src="/assets/js/lib/bootstrap-datetimepicker.min.js" charset="utf-8" type="text/javascript"></script>
+	<link href="/assets/css/lib/bootstrap-datetimepicker.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript">
+	
+		//发送题目Tips
+		$(document).on("click","img[data-action='sendtip']",function(){
+			if(!confirm("确认向所有用户发送该题板?")){
+				return;
+			}
+			var topicId = $(this).attr("data-topicId");
+			var pic = $(this).attr('src');
+			$.ajax({
+				 type:"POST",
+				 url:"/admin/i_live_action/sendTopicTips",
+				 data: {
+				 	topicId:topicId,
+				 	pic:pic
+				 },
+				 timeout:180000,
+				 dataType:"json",
+				 processData:true,
+				 success: function(msg){
+					 if(msg.code == 0){
+						alert("发送成功");
+					 }else{
+					 	alert(msg.msg);
+					 }
+				 }
+			});
+		});
+		
+		//开始答题
+		$(document).on("click","a[data-action='answer']",function(){
+			var topicId = $(this).parent().attr("data-topicId");
+			$.ajax({
+				 type:"POST",
+				 url:"/admin/i_live_action/startAnswerTopic",
+				 data: {
+				 	topicId:topicId,
+				 },
+				 timeout:180000,
+				 dataType:"json",
+				 processData:true,
+				 success: function(msg){
+					 if(msg.code == 0){
+						alert("操作成功");
+					 }else{
+					 	alert(msg.msg);
+					 }
+				 }
+			});
+		});
+		
+		//开始答题
+		$(document).on("click","a[data-action='showanswer']",function(){
+			var topicId = $(this).parent().attr("data-topicId");
+			$.ajax({
+				 type:"POST",
+				 url:"/admin/i_live_action/showTopicAnswer",
+				 data: {
+				 	topicId:topicId,
+				 },
+				 timeout:180000,
+				 dataType:"json",
+				 processData:true,
+				 success: function(msg){
+					 if(msg.code == 0){
+						alert("操作成功");
+					 }else{
+					 	alert(msg.msg);
+					 }
+				 }
+			});
+		});
+		
+		//显示本轮得奖结果
+		$(document).on("click","a[data-action='showtopicresult']",function(){
+			var topicId = $(this).parent().attr("data-topicId");
+			$.ajax({
+				 type:"POST",
+				 url:"/admin/i_live_action/showTopicAnswerResult",
+				 data: {
+				 	topicId:topicId,
+				 },
+				 timeout:180000,
+				 dataType:"json",
+				 processData:true,
+				 success: function(msg){
+					 if(msg.code == 0){
+						alert("操作成功");
+					 }else{
+					 	alert(msg.msg);
+					 }
+				 }
+			});
+		});
+		
+		//结束本场
+		$(document).on("click","a[data-action='finishtopic']",function(){
+			var topicId = $(this).parent().attr("data-topicId");
+			$.ajax({
+				 type:"POST",
+				 url:"/admin/i_live_action/finishTopic",
+				 data: {
+				 	topicId:topicId,
+				 },
+				 timeout:180000,
+				 dataType:"json",
+				 processData:true,
+				 success: function(msg){
+					 if(msg.code == 0){
+					     window.location.reload();
+						alert("操作成功");
+					 }else{
+					 	alert(msg.msg);
+					 }
+				 }
+			});
+		});
+
+        //结束本场
+        $(document).on("click","a[data-action='finishlive']",function(){
+            var liveId = $.trim(getURLParam("liveId"));
+            $.ajax({
+                type:"POST",
+                url:"/admin/i_live_action/finishlive",
+                data: {
+                    liveId:liveId,
+                },
+                timeout:180000,
+                dataType:"json",
+                processData:true,
+                success: function(msg){
+                    if(msg.code == 0){
+                        alert("操作成功");
+                    }else{
+                        alert(msg.msg);
+                    }
+                }
+            });
+        });
+		//下一场
+		$(document).on("click","a[data-action='nexttopic']",function(){
+			window.location.reload();
+		});
+		
+		//显示本次直播黄金大脑榜
+		$(document).on("click","a[data-action='showliveresult']",function(){
+			var liveId = $.trim(getURLParam("liveId"));
+			$.ajax({
+				 type:"POST",
+				 url:"/admin/i_live_action/showLiveAnswerResult",
+				 data: {
+				 	liveId:liveId
+				 },
+				 timeout:180000,
+				 dataType:"json",
+				 processData:true,
+				 success: function(msg){
+					 if(msg.code == 0){
+						alert("操作成功");
+					 }else{
+					 	alert(msg.msg);
+					 }
+				 }
+			});
+		});
+		
+		//发送直播系统公告
+		$(document).on("click","a[data-action='systip']",function(){
+			var liveId = $.trim(getURLParam("liveId"));
+			var txt = $("#systip").val();
+			$.ajax({
+				 type:"POST",
+				 url:"/admin/i_live_action/sendSysTips",
+				 data: {
+				 	liveId:liveId,
+				 	txt:txt
+				 },
+				 timeout:180000,
+				 dataType:"json",
+				 processData:true,
+				 success: function(msg){
+					 if(msg.code == 0){
+						alert("操作成功");
+						$("#systip").val("");
+					 }else{
+					 	alert(msg.msg);
+					 }
+				 }
+			});
+		});
+		
+		//投放正确回答机器人
+		$(document).on("click","a[data-action='delisuccessrobots']",function(){
+			var topicId = $(this).attr('data-topicId');
+			var num = $("#delisuccessrobots").val();
+			$.ajax({
+				 type:"POST",
+				 url:"/admin/i_live_action/deliverRobotCorrectAnswer",
+				 data: {
+				 	topicId:topicId,
+				 	num:num
+				 },
+				 timeout:180000,
+				 dataType:"json",
+				 processData:true,
+				 success: function(msg){
+					 if(msg.code == 0){
+						alert("操作成功");
+						$("#delisuccessrobots").val("");
+					 }else{
+					 	alert(msg.msg);
+					 }
+				 }
+			});
+		});
+		
+		//投放错误回答机器人
+		$(document).on("click","a[data-action='delierrrobots']",function(){
+			var topicId = $(this).attr('data-topicId');
+			var num = $("#delierrrobots").val();
+			$.ajax({
+				 type:"POST",
+				 url:"/admin/i_live_action/deliverRobotErrorAnswer",
+				 data: {
+				 	topicId:topicId,
+				 	num:num
+				 },
+				 timeout:180000,
+				 dataType:"json",
+				 processData:true,
+				 success: function(msg){
+					 if(msg.code == 0){
+						alert("操作成功");
+						$("#delierrrobots").val("");
+					 }else{
+					 	alert(msg.msg);
+					 }
+				 }
+			});
+		});
+	</script>
+	#parse("control/cmn/admin_footer_assets.vm")
+</body>
+</html>

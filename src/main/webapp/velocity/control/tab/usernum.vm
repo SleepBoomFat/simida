@@ -1,0 +1,4 @@
+<ul class="nav nav-tabs">
+	<li #if($!{tab} == "usernums") class="active"    #end>  <a #if($!{tab} == "usernums")   href="#" #else href="/admin/i_root_query/usernum_stats"  #end>核心数据</a></li>
+</ul>
+

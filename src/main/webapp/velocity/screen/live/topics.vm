@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+	<!-- Add Title -->
+    <title>$!{live.title}</title>
+    
+	#parse("control/cmn/admin_top_assets.vm")
+	
+	<!-- Add this page owned css -->
+	
+</head>
+
+<body>
+    <div id="wrapper">
+    
+    	#parse("control/cmn/admin_top_nav.vm")
+    	
+        <div id="page-wrapper" style="margin:0px;padding:0px;">
+            <div class="container-fluid">
+               
+                <!-- Add your page content here -->
+                 <div style="margin-left:0px;margin-top:12px;">
+		 				<a data-toggle="modal" data-target="#add_topic" href="#" class="btn btn-default navbar-btn chour">新增题目</a>
+		 		 </div>
+			      
+				 <!-- 表格数据 -->
+	             <div style="margin-top:20px;">
+	               	<table class="table table-bordered">
+	               		 <tr class="error">
+	               		 	<th>类型</th>
+	               		 	<th>奖金</th>
+	               		 	<th>题板</th>
+							<th>描述</th>
+							<th>答题时间</th>
+							<th>状态</th>
+							<th>操作</th>
+	               		 </tr>
+	               		 #if($topics)
+	               		 	#set($i = 0)
+	               		 	#foreach($ele in $topics)
+			               		 <tr #if($i % 2 == 0) class="success" #else class="warning" #end data-money="$!{ele.money}" data-countdown="${ele.countdown}" data-robWrongWords="$!{ele.robWrongWords}" data-stopwords="$!{ele.stopwords}" data-index="$!{ele.index}" data-answer="$!{ele.answer}" data-topicType="$!{ele.topicType}" data-descTxt="$!{ele.descTxt}" data-id="$!{ele.topicId}">
+			               		    <td>
+								    	#if($ele.topicType == 1)
+								    		全场均分
+								    	#elseif($ele.topicType == 2)
+								    		一人独得
+								    	#end
+								    </td>  
+								    <td>$!{ele.money}元</td>
+								    <td style="font-size:11px;width:580px;word-break:break-all;" id="tippics-$!{ele.topicId}">
+								    	#if($ele.tips)
+								    		#foreach($pic in $ele.tips)
+								    			<img src="$pic" style="margin-right:6px;width:180px;height:120px;margin-top:10px;"/>
+								    		#end
+								    	#end
+								    </td>  
+								    <td style="font-size:11px;width:130px;word-break:break-all;">$!{ele.descTxt}</td>
+								    <td style="font-size:11px;">$!{ele.countdown}s</td>
+								    <td>
+								    	#if($ele.finished)
+								    		已结束
+								    	#else
+								    		未完结
+								    	#end
+								    </td>
+								    <td style="font-size:11px;">
+								    	<a data-action="del" href="#">删除</a> &nbsp;&nbsp;|&nbsp;&nbsp;
+								    	<a data-action="edit" href="#" style="">编辑</a>&nbsp;&nbsp;
+								    </td>  
+								 </tr>
+								 #set($i = $i + 1)
+							 #end
+						 #end
+					</table> 
+				  </div>
+				 
+				  <!-- 题目 start -->
+			      <div class="modal fade" role="dialog" id="add_topic" style="width:820px;top:20px;margin-left:250px;">  
+			            <div class="modal-content">  
+			                <div class="modal-header"> 
+			                    <a class="close" data-dismiss="modal">&times;</a> 
+			                    <h3>新增题目</h3>   
+			                </div>  
+			                <div class="modal-body">  
+			                    <form action="#" method="post" accept-charset="utf-8">   
+			                        <table class="table">	
+			                            <tr>  
+			                                <td>文字描述(选填)</td>  
+			                                <td><input type="text" name="phone" id="add_topic_descTxt" value="" class="form-control" placeholder="请输入题目描述" /></td>  
+			                            </tr>
+			                            <tr>  
+			                                <td>奖金类型(必填)</td>  
+			                                <td>
+			                                	<select class="selectpicker btn-default btn-large form-control" id="add_topic_topicType" style="width:100px;float:left;margin-top:8px;">
+											         <option value="1">全场均分</option>
+											         <option value="2">一人独得</option>
+												</select>
+			                                </td>  
+			                            </tr>
+			                            <tr>  
+			                                <td>答案(必填)</td>  
+			                                <td><input type="text" name="phone" id="add_topic_answer" value="" class="form-control" placeholder="请输入答案" /></td>  
+			                            </tr>
+			                            <tr>  
+			                                <td>答题时间(必填)</td>  
+			                                <td><input type="text" name="phone" id="add_topic_countdown" value="" class="form-control" placeholder="请输入答题时间，需大于5s" /></td>  
+			                            </tr>  
+			                            <tr>
+			                            	<td>奖金</td>  
+			                                <td><input type="text" name="phone" id="add_topic_money" value="" class="form-control" placeholder="请输入该题奖金" /></td>
+			                            </tr>
+			                            <tr>  
+			                                <td>过滤词(选填)</td>  
+			                                <td>
+			                                	<textarea rows="3" cols="20" class="form-control" id="add_topic_stopwords" placeholder="过滤词,使用因为逗号分割"></textarea>
+			                                </td>  
+			                            </tr>
+			                            <tr>  
+			                                <td>机器人答体错词库(选填)</td>  
+			                                <td>
+			                                	<textarea rows="3" cols="20" class="form-control" id="add_topic_robWrongWords" placeholder="使用因为逗号分割"></textarea>
+			                                </td>  
+			                            </tr>
+			                            <tr>
+			                            	<td>题板(添加题目图片，必填,按顺序添加)</td>
+			                                <td>
+			                                	<table class="table table-bordered">
+									       	  		<tbody id="add_topic_tips">
+									       	  			<tr id="add_topic_tips_first">
+										       	  			<th>题板</th>
+										       	  			<th>操作</th>
+									       	  			</tr>
+									       	  			<tr id="add_tip_btn_wrap">
+															<td></td>
+															<td><a href="#" data-toggle="modal" id="add_tip_btn">添加</a></td>
+														</tr>
+									       	  		</tbody>
+								        		</table>
+			                                </td>
+			                            </tr>
+			                            <tr>
+			                            	<td></td>  
+			                                <td><input type="button" name="login" value="确定" id="add_topic_btn" class="btn btn-primary btn-lg btn-block" /></td>  
+			                            </tr>  
+			                        </table>  
+			                    </form>  
+			                </div> 
+			          </div>
+	             </div>
+	             <!-- 题目 end -->
+                
+            </div>
+        </div>
+    </div>
+
+	<script type="text/javascript" src="/assets/js/lib/ajaxupload.3.5.js"></script>
+	<script src="/assets/js/lib/bootstrap-datetimepicker.min.js" charset="utf-8" type="text/javascript"></script>
+	<link href="/assets/css/lib/bootstrap-datetimepicker.css" type="text/css" rel="stylesheet" />
+
+	<!-- Add this page owned js -->
+	<script type="text/javascript">
+		$('.form_datetime').datetimepicker({
+	        format: 'yyyy-mm-dd hh:mm',
+	        weekStart: 1,
+	        todayBtn:  1,
+	        autoclose: 1,
+	        todayHighlight: 1,
+	        startView: 2,
+	        forceParse: 0,
+	        showMeridian: 1,
+	        pickerPosition: "bottom-right"
+	    });
+	    
+	    function addNewTip(newPic){
+	    	$("#add_topic_tips").append("<tr><td><img src='"+newPic+"' style='width:210px;height:140px;'/></td><td><a href='#' data-action='del_tip'>删除</a></td></tr>");
+	    }
+	    
+	    function freshTipUpload(){
+		    new AjaxUpload($("#add_tip_btn"),{  
+			   	 action: '/admin/i_tool_action/upload_pic',  
+		         data:{
+		         
+		         },  
+		         name: 'data',
+		         timeout:120000,
+		         onSubmit: function(file,ext) {
+		            if(!(ext && /^(png|jpeg|jpg|webp)$/.test(ext))) {  
+		                alert("您上传的图片格式有误，请重新选择！");  
+		                return false;  
+		            }  
+		         },
+		         onComplete:function(file,resp){
+		           var obj = jQuery.parseJSON(resp);
+		           if(obj.code == 0){
+		               var html = "<tr>" + $("#add_tip_btn_wrap").html() + "</tr>";
+	    			   $("#add_tip_btn_wrap").remove();
+		        	   addNewTip(obj.result);
+		        	   $("#add_topic_tips").append(html);
+		           }else{
+		           	  alert('上传失败:' + obj.msg);
+		           }
+		           freshTipUpload();
+		        }
+			});
+	    }
+	    
+	    freshTipUpload();
+	    
+	    var adding = false;
+		//添加题目
+		$("#add_topic_btn").on('click',function(){
+			if(adding){
+				return;
+			}
+			var id = $("#add_topic").attr('data-id');
+			var descTxt = $("#add_topic_descTxt").val();
+			var topicType = $("#add_topic_topicType").val();
+			var money = $("#add_topic_money").val();
+			var answer = $("#add_topic_answer").val();
+			var stopwords = $("#add_topic_stopwords").val();
+			var robWrongWords = $("#add_topic_robWrongWords").val();
+			var countdown =  $("#add_topic_countdown").val();
+			
+			var tips = [];
+			
+			var childs = $("#add_topic_tips").children();
+			if(childs.length <= 2){
+				alert("必须添加至少一张提示图")
+				return;
+			}
+			for(var i = 0;i < childs.length;i++){
+				if(i == 0 || i == childs.length -1){
+					continue;
+				}
+				tips.push($(childs[i]).children(0).children(0).attr('src'));
+			}
+			var liveId = $.trim(getURLParam("liveId"));
+			adding = true;
+			$.ajax({
+				 type:"POST",
+				 url:"/admin/i_live_action/add_or_updatetopic",
+				 data: {
+				 	liveId:liveId,
+				 	topicId:id,
+				 	topicType:topicType,
+				 	descTxt:descTxt,
+				 	tips:JSON.stringify(tips),
+				 	answer:answer,
+				 	stopwords:stopwords,
+				 	robWrongWords:robWrongWords,
+				 	countdown:countdown,
+				 	money:money
+				 },
+				 timeout:180000,
+				 dataType:"json",
+				 processData:true,
+				 success: function(msg){
+				 	adding = false;
+					 if(msg.code == 0){
+						 window.location.href="/admin/i_live_query/topics?liveId=" + liveId;
+					 }else{
+					 	alert(msg.msg);
+					 }
+				 }
+			});
+		});
+		
+		$(document).on("click","a[data-action='del']",function(){
+			var id = $(this).parent().parent().attr('data-id');
+			var entry = $(this).parent().parent();
+			if(!confirm("是否确认删除")){
+				return;
+			}
+			$.ajax({
+				 type:"POST",
+				 url:"/admin/i_live_action/delete_topic",
+				 data: {
+				 	id:id
+				 },
+				 timeout:180000,
+				 dataType:"json",
+				 processData:true,
+				 success: function(msg){
+					 if(msg.code == 0){
+						entry.remove();
+					 }else{
+					 	alert(msg.msg);
+					 }
+				 }
+			});
+		});
+		
+		
+		
+		$("#add_topic").on("hidden.bs.modal",function(){
+			$("#add_topic").attr('data-id',"");
+			$("#add_topic_descTxt").val("");
+			$("#add_topic_topicType").val(1);
+			$("#add_topic_answer").val("");
+			$("#add_topic_stopwords").val("");
+			$("#add_topic_money").val("");
+			$("#add_topic_robWrongWords").val("");
+			$("#add_topic_countdown").val("");
+			
+			$("#add_topic_tips").html('<tr id="add_topic_tips_first"><th>Tip</th><th>操作</th></tr><tr id="add_tip_btn_wrap"><td></td><td><a href="#" data-toggle="modal" id="add_tip_btn">添加</a></td></tr>');
+			
+			freshTipUpload();
+		});
+		
+		$(document).on("click","a[data-action='edit']",function(){
+			var id = $(this).parent().parent().attr('data-id');
+			var descTxt = $(this).parent().parent().attr('data-descTxt');
+			var topicType = $(this).parent().parent().attr('data-topicType');
+			var answer = $(this).parent().parent().attr('data-answer');
+			var index = $(this).parent().parent().attr('data-index');
+			var stopwords = $(this).parent().parent().attr('data-stopwords');
+			var robWrongWords = $(this).parent().parent().attr('data-robWrongWords');
+			var countdown = $(this).parent().parent().attr('data-countdown');
+			var money = $(this).parent().parent().attr('data-money');
+			
+			$("#add_topic").attr('data-id',id);
+			$("#add_topic_descTxt").val(descTxt);
+			$("#add_topic_topicType").val(topicType);
+			$("#add_topic_answer").val(answer);
+			$("#add_topic_stopwords").val(stopwords);
+			$("#add_topic_robWrongWords").val(robWrongWords);
+			$("#add_topic_countdown").val(countdown);
+			$("#add_topic_money").val(money);
+			
+			var tips = $("#tippics-" + id).children();
+			if(tips && tips.length > 0){
+				var html = "<tr>" + $("#add_tip_btn_wrap").html() + "</tr>";
+				$("#add_tip_btn_wrap").remove();
+				for(var i = 0;i < tips.length;i++){
+					addNewTip($(tips[i]).attr('src'));
+				}
+				$("#add_topic_tips").append(html);
+			}
+			
+			freshTipUpload();
+			
+			$("#add_topic").modal("show");
+		});
+		
+		//删除一个tips
+		$(document).on('click',"a[data-action='del_tip']",function(){
+			$(this).parent().parent().remove();
+		});
+	</script>
+	#parse("control/cmn/admin_footer_assets.vm")
+</body>
+</html>

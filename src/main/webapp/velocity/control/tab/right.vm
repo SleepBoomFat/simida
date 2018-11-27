@@ -1,0 +1,5 @@
+<ul class="nav nav-tabs">
+	<li #if($!{tab} == "user") class="active"    #end>  <a #if($!{tab} == "user")   href="#" #else href="/admin/i_root_query/add_user"  #end>添加系统用户</a></li>
+    <li #if($!{tab} == "right") class="active"   #end>  <a #if($!{tab} == "right")  href="#" #else href="/admin/i_root_query/add_right" #end>添加系统权限</a></li>
+</ul>
+

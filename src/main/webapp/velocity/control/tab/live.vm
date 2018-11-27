@@ -1,0 +1,4 @@
+<ul class="nav nav-tabs">
+	<li #if($!{tab} == "lives") class="active"    #end>  <a #if($!{tab} == "lives")   href="#" #else href="/admin/i_live_query/lives"  #end>直播列表</a></li>
+</ul>
+

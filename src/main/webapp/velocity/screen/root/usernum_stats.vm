@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+	<!-- Add Title -->
+    <title>用户数统计</title>
+    
+	#parse("control/cmn/admin_top_assets.vm")
+	
+	<!-- Add this page owned css -->
+	<link href="/assets/css/lib/bootstrap-datetimepicker.css" type="text/css" rel="stylesheet">
+	
+</head>
+
+<body>
+    <div id="wrapper">
+    
+    	#parse("control/cmn/admin_top_nav.vm")
+    	#parse("control/cmn/admin_left.vm")
+    	
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                		<!-- tab -->
+            	#parse("control/tab/usernum.vm")
+            	
+                <nav  class="navbar navbar-default" role="navigation">
+	            <div class="container-fluid">
+		                <form class="navbar-form navbar-right" role="search" style="margin-right: 1px;">
+		                    <div class="form-group">
+		                        <input type="text" class="form-control form_datetime" value="" readonly data-date-format="yyyy-MM-dd" placeholder="开始日期" style="width:160px;">
+		                        &nbsp;&nbsp;-&nbsp;&nbsp;
+		                        <input type="text" class="form-control form_datetime" value="" readonly data-date-format="dd MM yyyy - HH:ii p" placeholder="结束日期" style="width:160px;">
+		                    </div>
+		                    <button type="button" class="btn btn-default avbar-btn timer" data-rel="1">提交</button>
+		                </form>
+		            </div>
+		        </nav>
+		        <div id="total_usernum" style="height:400px"></div>
+                
+            </div>
+        </div>
+    </div>
+
+	#parse("control/cmn/admin_footer_assets.vm")
+	
+	<!-- Add this page owned js -->
+	<script src="/assets/js/build/esl.js" charset="utf-8" type="text/javascript"></script>
+    <script src="/assets/js/build/echarts.js" charset="utf-8" type="text/javascript"></script>
+    <script src="/assets/js/lib/bootstrap-datetimepicker.min.js" charset="utf-8" type="text/javascript"></script>
+    <script src="/assets/js/live/usernum.js?t=20151222" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+		   refresh();
+		   $('.form_datetime').datetimepicker({
+			    format: 'yyyy-mm-dd',
+			    weekStart: 1,
+			    todayBtn:  1,
+			    autoclose: 1,
+			    todayHighlight: 1,
+			    startView: 2,
+			    forceParse: 0,
+			    showMeridian: 1,
+			    pickerPosition: "bottom-right"
+			});
+		
+			$('.scalechosen button').on("click", function(){
+			    $('.scalechosen .active').removeClass('active');
+			    $(this).addClass('active');
+			    var temp = $(this).attr('data-rel');
+			    timechosen(temp);
+			});
+		
+			$('.timer').on("click", function(e){
+			    e.preventDefault();
+			    var temp = $('.form_datetime');
+			    if((temp[0].value == null) || (temp[0].value == null)){
+			        alert("请先选择时间区间！");
+			    }
+		
+			    if(temp[0].value >= temp[1].value){
+			        alert("结束时间必须大于开始时间！");
+			    } else {
+			        startTime = Date.parse(temp[0].value);
+			        endTime = Date.parse(temp[1].value);
+			        refresh();
+			    }
+			});
+	   </script>
+</body>
+</html>

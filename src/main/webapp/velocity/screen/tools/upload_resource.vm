@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+	<!-- Add Title -->
+    <title>上传静态资源</title>
+    
+	#parse("control/cmn/admin_top_assets.vm")
+	
+	<!-- Add this page owned css -->
+	
+</head>
+
+<body>
+    <div id="wrapper">
+    
+    	#parse("control/cmn/admin_top_nav.vm")
+    	#parse("control/cmn/admin_left.vm")
+    	
+        <div id="page-wrapper">
+            <div class="container-fluid">
+            
+            	  #parse("control/tab/upload.vm")
+		        
+				  <div style="margin-left:1px;margin-top:20px;">
+	 				  <a data-toggle="modal" data-target="#add_livepic" href="#" class="btn btn-primary btn-large">上传静图</a>
+	 				  <a data-toggle="modal" data-target="#add_zip" href="#" class="btn btn-primary btn-large" style="margin-left:60px;">上传zip</a>
+	 			  </div>
+
+                <div class="modal fade" role="dialog" id="add_file" style="width:600px;top:60px;left:250px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a class="close" data-dismiss="modal">&times;</a>
+                            <h3>上传文件</h3>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#" method="post" accept-charset="utf-8">
+                                <table class="table">
+                                    <tr>
+                                        <td><p style="margin-top:8px;">文件</p></td>
+                                        <td>
+                                            <button type="button" id="upload_file_btn1" class="btn btn-default cancel">&nbsp;&nbsp;上传&nbsp;&nbsp;</button>
+                                            <input type="text"  id="add_file_input" class="form-control" style="display:none;"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+	 			  
+			      <div class="modal fade" role="dialog" id="add_livepic" style="width:600px;top:60px;left:250px;">  
+			            <div class="modal-content">  
+			                <div class="modal-header">  
+			                	<a class="close" data-dismiss="modal">&times;</a> 
+		                    	<h3>上传静态图片</h3>
+			                </div>  
+			                <div class="modal-body">  
+			                    <form action="#" method="post" accept-charset="utf-8">   
+			                        <table class="table">
+			                            <tr>
+			                            	<td><p style="margin-top:8px;">图片1</p></td>   
+			                                <td>
+			                                	<button type="button" id="upload_png_btn1" class="btn btn-default cancel">&nbsp;&nbsp;上传&nbsp;&nbsp;</button>
+			                                	<input type="text"  id="add_livepic_pic1" class="form-control" style="display:none;"/>
+			                                </td>
+			                            </tr>   
+			                        </table>  
+			                    </form>  
+			                </div> 
+			            </div>  
+			      </div>
+			    
+			    <div class="modal fade" role="dialog" id="add_zip" style="width:500px;top:120px;left:420px;">  
+			            <div class="modal-content">  
+			                <div class="modal-header">  
+			                	<a class="close" data-dismiss="modal">&times;</a> 
+		                    	<h3>上传zip</h3>
+			                </div>  
+			                <div class="modal-body">  
+			                    <form action="#" method="post" accept-charset="utf-8">   
+			                        <table class="table">
+			                            <tr>
+			                            	<td><p style="margin-top:8px;">请选择zip</p></td>   
+			                                <td>
+			                                	<button type="button" id="add_zip_btn" class="btn btn-default cancel">&nbsp;&nbsp;上传&nbsp;&nbsp;</button>
+			                                	<input type="text"  id="add_zip_pic" class="form-control" style="display:none;"/>
+			                                </td>
+			                            </tr>   
+			                        </table>  
+			                    </form>  
+			                </div> 
+			            </div>  
+			      </div>
+			      <!--end-->
+            </div>
+        </div>
+    </div>
+
+	#parse("control/cmn/admin_footer_assets.vm")
+	
+	<!-- Add this page owned js -->
+	<script type="text/javascript" src="/assets/js/lib/ajaxupload.3.5.js"></script>
+	<script type="text/javascript" src="/assets/js/live/upload_resource.js?t=2018"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+<!-- endinject -->
+<!-- inject:js -->
+<script type="text/javascript" src="/assets/js/dev/admin-template.js"></script>
+<!-- endinject -->
+<script type="text/javascript" src="/assets/js/lib/live.dialog.js?t=20150407"></script>

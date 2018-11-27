@@ -1,0 +1,482 @@
+/**
+ * Biu lib
+ * 
+ */
+/* Sasshat Sass Library
+ * Author: wang.2gou
+ * Email: willian12345@126.com
+ * Date: 2014-06-06
+ * Vertion: Beta
+ * Github: https://github.com/willian12345/sasshat
+ * Sass-version: Sass@3.7.7
+ */
+@-webkit-keyframes biu-loading {
+  100% {
+    background-position: -880px 0; } }
+@-moz-keyframes biu-loading {
+  100% {
+    background-position: -880px 0; } }
+@-ms-keyframes biu-loading {
+  100% {
+    background-position: -880px 0; } }
+@keyframes biu-loading {
+  100% {
+    background-position: -880px 0; } }
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box; }
+
+@-webkit-keyframes biu-jpg2gif-w3h4 {
+  0% {
+    background-position: 0 0; }
+  14.2857142857% {
+    background-position: 0 25%; }
+  28.5714285714% {
+    background-position: 0 50%; }
+  42.8571428571% {
+    background-position: 0 75%; }
+  57.1428571429% {
+    background-position: 0 100%; }
+  71.4285714286% {
+    background-position: 0 75%; }
+  85.7142857143% {
+    background-position: 0 50%; }
+  100% {
+    background-position: 0 25%; } }
+@-moz-keyframes biu-jpg2gif-w3h4 {
+  0% {
+    background-position: 0 0; }
+  14.2857142857% {
+    background-position: 0 25%; }
+  28.5714285714% {
+    background-position: 0 50%; }
+  42.8571428571% {
+    background-position: 0 75%; }
+  57.1428571429% {
+    background-position: 0 100%; }
+  71.4285714286% {
+    background-position: 0 75%; }
+  85.7142857143% {
+    background-position: 0 50%; }
+  100% {
+    background-position: 0 25%; } }
+@-ms-keyframes biu-jpg2gif-w3h4 {
+  0% {
+    background-position: 0 0; }
+  14.2857142857% {
+    background-position: 0 25%; }
+  28.5714285714% {
+    background-position: 0 50%; }
+  42.8571428571% {
+    background-position: 0 75%; }
+  57.1428571429% {
+    background-position: 0 100%; }
+  71.4285714286% {
+    background-position: 0 75%; }
+  85.7142857143% {
+    background-position: 0 50%; }
+  100% {
+    background-position: 0 25%; } }
+@keyframes biu-jpg2gif-w3h4 {
+  0% {
+    background-position: 0 0; }
+  14.2857142857% {
+    background-position: 0 25%; }
+  28.5714285714% {
+    background-position: 0 50%; }
+  42.8571428571% {
+    background-position: 0 75%; }
+  57.1428571429% {
+    background-position: 0 100%; }
+  71.4285714286% {
+    background-position: 0 75%; }
+  85.7142857143% {
+    background-position: 0 50%; }
+  100% {
+    background-position: 0 25%; } }
+@-webkit-keyframes biu-jpg2gif {
+  0% {
+    background-position: 0 0; }
+  14.2857142857% {
+    background-position: 0 25%; }
+  28.5714285714% {
+    background-position: 0 50%; }
+  42.8571428571% {
+    background-position: 0 75%; }
+  57.1428571429% {
+    background-position: 0 100%; }
+  71.4285714286% {
+    background-position: 0 75%; }
+  85.7142857143% {
+    background-position: 0 50%; }
+  100% {
+    background-position: 0 25%; } }
+@-moz-keyframes biu-jpg2gif {
+  0% {
+    background-position: 0 0; }
+  14.2857142857% {
+    background-position: 0 25%; }
+  28.5714285714% {
+    background-position: 0 50%; }
+  42.8571428571% {
+    background-position: 0 75%; }
+  57.1428571429% {
+    background-position: 0 100%; }
+  71.4285714286% {
+    background-position: 0 75%; }
+  85.7142857143% {
+    background-position: 0 50%; }
+  100% {
+    background-position: 0 25%; } }
+@-ms-keyframes biu-jpg2gif {
+  0% {
+    background-position: 0 0; }
+  14.2857142857% {
+    background-position: 0 25%; }
+  28.5714285714% {
+    background-position: 0 50%; }
+  42.8571428571% {
+    background-position: 0 75%; }
+  57.1428571429% {
+    background-position: 0 100%; }
+  71.4285714286% {
+    background-position: 0 75%; }
+  85.7142857143% {
+    background-position: 0 50%; }
+  100% {
+    background-position: 0 25%; } }
+@keyframes biu-jpg2gif {
+  0% {
+    background-position: 0 0; }
+  14.2857142857% {
+    background-position: 0 25%; }
+  28.5714285714% {
+    background-position: 0 50%; }
+  42.8571428571% {
+    background-position: 0 75%; }
+  57.1428571429% {
+    background-position: 0 100%; }
+  71.4285714286% {
+    background-position: 0 75%; }
+  85.7142857143% {
+    background-position: 0 50%; }
+  100% {
+    background-position: 0 25%; } }
+@-webkit-keyframes biu-jpg2gif2 {
+  0% {
+    background-position: 0 0; }
+  50% {
+    background-position: 0 100%; }
+  100% {
+    background-position: 0 50%; } }
+@-moz-keyframes biu-jpg2gif2 {
+  0% {
+    background-position: 0 0; }
+  50% {
+    background-position: 0 100%; }
+  100% {
+    background-position: 0 50%; } }
+@-ms-keyframes biu-jpg2gif2 {
+  0% {
+    background-position: 0 0; }
+  50% {
+    background-position: 0 100%; }
+  100% {
+    background-position: 0 50%; } }
+@keyframes biu-jpg2gif2 {
+  0% {
+    background-position: 0 0; }
+  50% {
+    background-position: 0 100%; }
+  100% {
+    background-position: 0 50%; } }
+@-webkit-keyframes biu-jpg2gif3 {
+  0% {
+    background-position: 0 0; }
+  33.3333333% {
+    background-position: 0 50%; }
+  66.6666666% {
+    background-position: 0 100%; }
+  100% {
+    background-position: 0 50%; } }
+@-moz-keyframes biu-jpg2gif3 {
+  0% {
+    background-position: 0 0; }
+  33.3333333% {
+    background-position: 0 50%; }
+  66.6666666% {
+    background-position: 0 100%; }
+  100% {
+    background-position: 0 50%; } }
+@-ms-keyframes biu-jpg2gif3 {
+  0% {
+    background-position: 0 0; }
+  33.3333333% {
+    background-position: 0 50%; }
+  66.6666666% {
+    background-position: 0 100%; }
+  100% {
+    background-position: 0 50%; } }
+@keyframes biu-jpg2gif3 {
+  0% {
+    background-position: 0 0; }
+  33.3333333% {
+    background-position: 0 50%; }
+  66.6666666% {
+    background-position: 0 100%; }
+  100% {
+    background-position: 0 50%; } }
+@-webkit-keyframes biu-jpg2gif4 {
+  0% {
+    background-position: 0 0; }
+  20% {
+    background-position: 0 33.3333333%; }
+  40% {
+    background-position: 0 66.6666666%; }
+  60% {
+    background-position: 0 100%; }
+  80% {
+    background-position: 0 66.6666666%; }
+  100% {
+    background-position: 0 33.3333333%; } }
+@-moz-keyframes biu-jpg2gif4 {
+  0% {
+    background-position: 0 0; }
+  20% {
+    background-position: 0 33.3333333%; }
+  40% {
+    background-position: 0 66.6666666%; }
+  60% {
+    background-position: 0 100%; }
+  80% {
+    background-position: 0 66.6666666%; }
+  100% {
+    background-position: 0 33.3333333%; } }
+@-ms-keyframes biu-jpg2gif4 {
+  0% {
+    background-position: 0 0; }
+  20% {
+    background-position: 0 33.3333333%; }
+  40% {
+    background-position: 0 66.6666666%; }
+  60% {
+    background-position: 0 100%; }
+  80% {
+    background-position: 0 66.6666666%; }
+  100% {
+    background-position: 0 33.3333333%; } }
+@keyframes biu-jpg2gif4 {
+  0% {
+    background-position: 0 0; }
+  20% {
+    background-position: 0 33.3333333%; }
+  40% {
+    background-position: 0 66.6666666%; }
+  60% {
+    background-position: 0 100%; }
+  80% {
+    background-position: 0 66.6666666%; }
+  100% {
+    background-position: 0 33.3333333%; } }
+@-webkit-keyframes biu-jpg2gif5 {
+  0% {
+    background-position: 0 0; }
+  14.2857143% {
+    background-position: 0 25%; }
+  28.5714286% {
+    background-position: 0 50%; }
+  42.8571429% {
+    background-position: 0 75%; }
+  57.1428572% {
+    background-position: 0 100%; }
+  71.4285715% {
+    background-position: 0 75%; }
+  85.7142858% {
+    background-position: 0 50%; }
+  100% {
+    background-position: 0 25%; } }
+@-moz-keyframes biu-jpg2gif5 {
+  0% {
+    background-position: 0 0; }
+  14.2857143% {
+    background-position: 0 25%; }
+  28.5714286% {
+    background-position: 0 50%; }
+  42.8571429% {
+    background-position: 0 75%; }
+  57.1428572% {
+    background-position: 0 100%; }
+  71.4285715% {
+    background-position: 0 75%; }
+  85.7142858% {
+    background-position: 0 50%; }
+  100% {
+    background-position: 0 25%; } }
+@-ms-keyframes biu-jpg2gif5 {
+  0% {
+    background-position: 0 0; }
+  14.2857143% {
+    background-position: 0 25%; }
+  28.5714286% {
+    background-position: 0 50%; }
+  42.8571429% {
+    background-position: 0 75%; }
+  57.1428572% {
+    background-position: 0 100%; }
+  71.4285715% {
+    background-position: 0 75%; }
+  85.7142858% {
+    background-position: 0 50%; }
+  100% {
+    background-position: 0 25%; } }
+@keyframes biu-jpg2gif5 {
+  0% {
+    background-position: 0 0; }
+  14.2857143% {
+    background-position: 0 25%; }
+  28.5714286% {
+    background-position: 0 50%; }
+  42.8571429% {
+    background-position: 0 75%; }
+  57.1428572% {
+    background-position: 0 100%; }
+  71.4285715% {
+    background-position: 0 75%; }
+  85.7142858% {
+    background-position: 0 50%; }
+  100% {
+    background-position: 0 25%; } }
+@-webkit-keyframes biu-rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+@-moz-keyframes biu-rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+@-ms-keyframes biu-rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+@keyframes biu-rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+.gif {
+  position: relative;
+  overflow: hidden; }
+  .gif::before {
+    display: block;
+    content: "";
+    padding-bottom: 133.33333333%; }
+
+.unload {
+  z-index: 3; }
+  .unload .img::before {
+    display: block; }
+
+.img {
+  position: absolute;
+  width: 133.33333333%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: #ddd;
+  background-position: 0 0;
+  background-size: 100% auto; }
+  .img::before {
+    display: none;
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -40px 0 0 -40px;
+    width: 80px;
+    height: 80px;
+    z-index: 1;
+    background: url(http://assets.beauty.geekint.com/tms/global/img/biu-loading880x80.png) no-repeat;
+    -webkit-animation: biu-loading 815ms steps(11) infinite;
+    -moz-animation: biu-loading 815ms steps(11) infinite;
+    -ms-animation: biu-loading 815ms steps(11) infinite;
+    animation: biu-loading 815ms steps(11) infinite;
+    -webkit-transform: scale(0.5);
+    -moz-transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    transform: scale(0.5); }
+
+.jpg2gif {
+  -webkit-animation: biu-jpg2gif 800ms steps(1, end) infinite;
+  -moz-animation: biu-jpg2gif 800ms steps(1, end) infinite;
+  -ms-animation: biu-jpg2gif 800ms steps(1, end) infinite;
+  animation: biu-jpg2gif 800ms steps(1, end) infinite;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0); }
+
+.gif-w3h4 .img {
+  width: 100%; }
+
+.gif-w1h1::before {
+  padding-bottom: 100%; }
+.gif-w1h1 .img {
+  width: 100%; }
+
+.frame2 {
+  -webkit-animation: biu-jpg2gif2 405ms steps(1, end) infinite;
+  -moz-animation: biu-jpg2gif2 405ms steps(1, end) infinite;
+  -ms-animation: biu-jpg2gif2 405ms steps(1, end) infinite;
+  animation: biu-jpg2gif2 405ms steps(1, end) infinite; }
+
+.frame3 {
+  -webkit-animation: biu-jpg2gif3 540ms steps(1, end) infinite;
+  -moz-animation: biu-jpg2gif3 540ms steps(1, end) infinite;
+  -ms-animation: biu-jpg2gif3 540ms steps(1, end) infinite;
+  animation: biu-jpg2gif3 540ms steps(1, end) infinite; }
+
+.frame4 {
+  -webkit-animation: biu-jpg2gif4 815ms steps(1, end) infinite;
+  -moz-animation: biu-jpg2gif4 815ms steps(1, end) infinite;
+  -ms-animation: biu-jpg2gif4 815ms steps(1, end) infinite;
+  animation: biu-jpg2gif4 815ms steps(1, end) infinite; }
+
+.frame5 {
+  -webkit-animation: biu-jpg2gif5 1080ms steps(1, end) infinite;
+  -moz-animation: biu-jpg2gif5 1080ms steps(1, end) infinite;
+  -ms-animation: biu-jpg2gif5 1080ms steps(1, end) infinite;
+  animation: biu-jpg2gif5 1080ms steps(1, end) infinite; }

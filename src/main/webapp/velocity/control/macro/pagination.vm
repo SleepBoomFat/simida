@@ -1,0 +1,87 @@
+#macro (pagination $totalPage $cPage $url)
+    #set($url = $url + "?p=")
+    #set($Integer = 0)
+    #set($cPage = $Integer.parseInt($cPage))
+<nav aria-label="Page navigation" class="text-center">
+    <ul class="pagination">
+        #if($cPage != 1 && $cPage != 2)
+            <li>
+                #set($tmp = $cPage - 1)
+                #set($tmpUrl = $url + $tmp)
+                <a href="${tmpUrl}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            #set($tmpUrl = $url + 1)
+            <li><a href="${tmpUrl}">1</a></li>
+            #if($cPage >= 4)
+                <li><span>...</span></li>
+                #set($tmpMin = $cPage - 2)
+                #set($tmpMax = $cPage - 1)
+                #foreach($p in [$tmpMin..$tmpMax])
+                    #set($tmpUrl = $url + $p)
+                    <li><a href="${tmpUrl}">${p}</a></li>
+                #end
+                #if ($cPage != $totalPage)
+                    <li class="active"><span>${cPage}</span></li>
+                #end
+            #elseif($cPage > 2 && $cPage != $totalPage)
+                #foreach($p in [2..$cPage])
+                    #if($p == $cPage)
+                        <li class="active"><span>${cPage}</span></li>
+                    #else
+                        #set($tmpUrl = $url + $p)
+                        <li><a href="${tmpUrl}">${p}</a></li>
+                    #end
+                #end
+            #end
+        #elseif ($cPage == 1)
+            <li class="disabled">
+                <span aria-hidden="true">&laquo;</span>
+            </li>
+            <li class="active"><span>1</span></li>
+        #elseif($cPage == 2)
+            <li class="disabled">
+                <span aria-hidden="true">&laquo;</span>
+            </li>
+            #set($tmpUrl = $url + 1)
+            <li><a href="${tmpUrl}">1</a></li>
+            <li class="active"><span>2</span></li>
+        #end
+
+        #if($cPage != $totalPage)
+            #set($tmp = $totalPage - 4)
+            #if($cPage > $tmp)
+                #set($tmpMin = $cPage + 1)
+                #foreach($p in [$tmpMin..$totalPage])
+                    #set($tmpUrl = $url + $p)
+                    <li><a href="${tmpUrl}">${p}</a></li>
+                #end
+            #else
+                #set($tmpMin = $cPage + 1)
+                #set($tmpMax = $cPage + 3)
+                #foreach($p in [$tmpMin..$tmpMax])
+                    #set($tmpUrl = $url + $p)
+                    <li><a href="${tmpUrl}">${p}</a></li>
+                #end
+                <li><span>...</span></li>
+                #set($tmpUrl = $url + $totalPage)
+                <li><a href="${tmpUrl}">${totalPage}</a></li>
+            #end
+            <li>
+                #set($tmpUrl = $cPage + 1)
+                <a href="${tmpUrl}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        #else
+            #if($cPage != 1)
+                <li class="active"><span>${cPage}</span></li>
+            #end
+            <li class="disabled">
+                <span aria-hidden="true">&raquo;</span>
+            </li>
+        #end
+    </ul>
+</nav>
+#end

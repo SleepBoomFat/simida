@@ -1,0 +1,7 @@
+#macro(gender $g)
+    #if($g == 1)
+    男
+    #else
+    女
+    #end
+#end

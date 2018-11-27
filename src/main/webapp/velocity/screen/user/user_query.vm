@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+	<!-- Add Title -->
+    <title>用户管理</title>
+    
+	#parse("control/cmn/admin_top_assets.vm")
+	
+	<!-- Add this page owned css -->
+	
+</head>
+
+<body>
+    <div id="wrapper">
+    
+    	#parse("control/cmn/admin_top_nav.vm")
+    	#parse("control/cmn/admin_left.vm")
+    	
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                
+                <!-- tab -->
+                #parse("control/tab/user.vm")
+               
+                <!-- Add your page content here -->
+
+                <nav  class="navbar navbar-default" role="navigation">
+                    <div class="container-fluid">
+                        <td>
+                            <select class="selectpicker btn-default btn-large form-control" id="search_keywords" style="width:100px;float:left;margin-top:8px;">
+                                <option value="0"  #if("$!{option}" == "0") selected="selected" #end text="uid">用户编号ID</option>
+                                <option value="1"  #if("$!{option}" == "1") selected="selected" #end text="openid">用户OpenID</option>
+                            </select>
+                        </td>
+                        <input type="text" id="query" value="$!{query}" class="form-control" style="float:left;margin-left:10px;width:200px;margin-top:8px;" placeholder="请输入用户对应的ID查询"/>
+                        <button type="button" class="btn btn-default navbar-btn chour" data-rel="hour" id="tag_search" style="margin-top:8px;margin-left:12px;">搜索</button>
+                    </div>
+                </nav>
+
+                <div style="margin-top:20px;">
+                    <table class="table table-bordered" id="all_accounts">
+                        <tr class="error">
+                            <th>编号ID</th>
+                            <th>OpenID</th>
+                            <th>昵称</th>
+                            <th>城市</th>
+                            <th>注册日期</th>
+                            <th>操作</th>
+                        </tr>
+                        #if($result)
+                            <tr #if($i % 2 == 0) class="success" #else class="warning" #end>
+                                <td>$!{result.uid}</td>
+                                <td>$!{result.openId}</td>
+                                <td>$!{result.nick}</td>
+                                <td>$!{result.city}</td>
+                                <td>$!{ctool.formatDate($!{result.ctime},'yyyy-MM-dd HH:mm:ss')}</td>
+                                <td>暂无</td>
+                            </tr>
+                        #end
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+	<!-- Add this page owned js -->
+
+	#parse("control/cmn/admin_footer_assets.vm")
+
+    <script type="text/javascript">
+        $("#tag_search").on('click',function(){
+            event.preventDefault();
+            var keywords = $("#search_keywords").val();
+            var query = $("#query").val()
+            var params = "?query=" + query + "&type=" + keywords;
+            window.location.href = "/admin/i_user_query/query_user" + params;
+        });
+    </script>
+</body>
+</html>

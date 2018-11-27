@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+	<!-- Add Title -->
+    <title>添加系统权限</title>
+    
+	#parse("control/cmn/admin_top_assets.vm")
+	
+	<!-- Add this page owned css -->
+	
+</head>
+
+<body>
+    <div id="wrapper">
+    
+    	#parse("control/cmn/admin_top_nav.vm")
+    	#parse("control/cmn/admin_left.vm")
+    	
+        <div id="page-wrapper">
+            <div class="container-fluid">
+            		<!-- tab -->
+            		#parse("control/tab/right.vm")
+            		
+            		<div style="margin-left:1px;padding-top:15px;">
+		 				<a id="add_right" href="#" class="btn btn-primary btn-large">添加新权限</a>
+		 			</div>
+		 	
+	               	<div style="margin-top:20px;">
+		               	<table class="table table-bordered" id="all_rights">
+		               		 <tr class="error">
+								<th>权限名</th>
+								<th>备注</th>
+								<th>创建时间</th>
+								<th>操作</th>
+		               		 </tr>
+		               		 #if($rights)
+		               		 	#set($i = 0)
+		               		 	#foreach($ele in $rights)
+				               		 <tr #if($i % 2 == 0) class="success" #else class="warning" #end>
+				               		    <td>$!{ele.right}</td>
+				               		    <td>$!{ele.note}</td>
+				               		    <td>$!{ele.ctime}</td>  
+									    <td>
+									    	#if($!{ele.right} != "root")
+									    		<a data-right="$!{ele.right}" data-action="del_rights" href="#">删除权限</a>
+									    	#end
+									    </td>  
+									 </tr>
+									 #set($i = $i + 1)
+								 #end
+							 #end
+						</table> 
+					</div>
+					
+					<!-- 新建dialog -->
+				    <div class="modal-dialog" id="add_right_dialog" style="display:none;top:120px;position:fixed;margin-left:250px;">  
+				            <div class="modal-content">  
+				                <div class="modal-header"> 
+				                	<a class="close" data-action="modal-close">&times;</a> 
+				                    <h3>添加新权限</h3>   
+				                </div>  
+				                <div class="modal-body">  
+				                    <form action="#" method="post" accept-charset="utf-8">   
+				                        <table class="table">
+				                            <tr>  
+				                                <td>权限名</td>  
+				                                <td><input type="text" name="name" id="right_name" value="" class="form-control" placeholder="请输入权限名" /></td>  
+				                            </tr>
+				                            <tr>  
+				                                <td>备注</td>  
+				                                <td><input type="text" name="name" id="right_note" value="" class="form-control" placeholder="备注" /></td>  
+				                            </tr>
+				                            <tr>
+				                            	<td></td>
+				                            	<td id="add_right_error_msg" style="color:red;"></td>
+				                            </tr>  
+				                            <tr>
+				                            	<td></td>  
+				                                <td><input type="button" name="login" value="添加" id="add_right_btn" class="btn btn-primary btn-lg btn-block" /></td>  
+				                            </tr>  
+				                        </table>  
+				                    </form>  
+				                </div> 
+				          </div>  
+			       </div>
+            </div>
+        </div>
+    </div>
+
+	#parse("control/cmn/admin_footer_assets.vm")
+	
+	<!-- Add this page owned js -->
+	<script type="text/javascript" src="/assets/js/live/right.js?t=20141110"></script>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+html{
+  height: 100%;
+  display: block;
+  font-size: 10px;
+  font-size: 62.5%;
+}
+
+body{
+  height: 100%;
+  display: block;
+  font-size: 1.4rem;
+  background: #663399 url('/assets/img/web-big-pic.png') 0 0 no-repeat;
+  background-size: 100%;
+}
+
+.color-box{
+  height: 2px;
+  height: 0.2rem;
+}
+
+
+
+div.container{
+  height: 100%;
+  background-color: #6a04b3;
+  color: white;
+  font-size: 15px;
+  font-size: 1.5rem;
+}
+
+.touxiang{
+  width: 30px;
+  height: 30px
+}
+
+.blackcontent{
+  width: 100%;
+  padding: 0 15px; 
+  font-size: 20px;
+  font-size: 2.0rem;
+  position: absolute; 
+  bottom: 15px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  word-wrap: break-word;
+}
+
+.timer{
+  background: transparent url('/assets/img/boom-animation.gif') 0 0 no-repeat;
+  background-size: 100% 100%;
+  height: 30px;
+  line-height: 30px;
+  }
+
+#status{
+  padding: 10px 0;
+}
+
+#commentlist{
+  padding: 5px 20px 25px 20px;
+  background-color: #6a04b3;
+}
+
+.media-body p{margin-bottom: 5px;}
+
+.commentstatus{
+  color: rgba(255,255,255,0.6);
+  font-size: 12px;
+  font-size: 1.2rem;
+}
+
+.flowad{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+.bomb-box{
+  font-size: 18px;
+  font-size: 1.8rem;
+  height: 100%;
+}
+
+.bomb-box .caption {
+  padding: 20px 0;
+}
+@media (min-width: 992px) { 
+  div.container{
+    width: 640px;
+    font-size: 20px;
+    font-size: 2.0rem;
+  } 
+  p.commentstatus{
+    font-size: 14px;
+    font-size: 1.4rem;
+  }
+  .touxiang{
+    width: 50px;
+    height: 50px;
+  }
+  div.color-box{
+    height: 4px;
+    height: 0.4rem;
+  }
+  .bomb-content{
+    font-size:30px;
+    font-size: 3.0rem;
+  }
+  .blackcontent{
+    font-size: 25px;
+    font-size: 2.5rem;
+  }
+}

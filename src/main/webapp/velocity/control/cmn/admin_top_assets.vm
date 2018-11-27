@@ -1,0 +1,36 @@
+ <!-- http://se.360.cn/v6/help/meta.html -->
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<link rel="shortcut icon" href="/assets/img/icon.png">
+<!-- bower:css -->
+<link rel="stylesheet" href="/assets/css/lib/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/lib/font-awesome.min.css">
+<link rel="stylesheet" href="/assets/css/lib/metisMenu.min.css">
+<!-- endinject -->
+<!-- inject:css -->
+<link rel="stylesheet" href="/assets/css/dev/admin-template.css">
+<!-- endinject -->
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!--
+<link rel="stylesheet" href="/assets/css/dev/common.css?t=20150819">
+-->
+<link rel="stylesheet" href="http://beauty-assets.oss-cn-hangzhou.aliyuncs.com/tms/global/css/biu.css?t=201510131222">
+
+<!-- bower:js -->
+<script type="text/javascript" src="/assets/js/lib/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="/assets/js/lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/lib/metisMenu.min.js"></script>
+<script type="text/javascript" src="/assets/js/lib/jquery.md5.js"></script>
+<script type="text/javascript" src="/assets/js/lib/jquery.json.min.js"></script>
+<script type="text/javascript" src="/assets/js/lib/live.admin.js?t=2017"></script>
+<script type="text/javascript" src="/assets/js/dev/common.js?t=20181019003"></script>
+<script src="http://beauty-assets.oss-cn-hangzhou.aliyuncs.com/tms/global/js/template-simple.min.js"></script>

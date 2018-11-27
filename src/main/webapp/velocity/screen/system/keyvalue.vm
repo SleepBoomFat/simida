@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+	<!-- Add Title -->
+    <title>Keyvalue配置</title>
+    
+	#parse("control/cmn/admin_top_assets.vm")
+	
+	<!-- Add this page owned css -->
+	
+</head>
+
+<body>
+    <div id="wrapper">
+    
+    	#parse("control/cmn/admin_top_nav.vm")
+    	#parse("control/cmn/admin_left.vm")
+    	
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                
+              #parse("control/tab/system.vm")
+               
+              <div style="margin-left:0px;margin-top:12px;">
+	 				<a data-toggle="modal" data-target="#add_keyvalue" href="#" class="btn btn-primary btn-large">新建Keyvalue</a>
+	 		  </div>
+		      
+			  <!-- 表格数据 -->
+              <div style="margin-top:20px;">
+               	<table class="table table-bordered">
+               		 <tr class="error">
+               		 	<th>名称</th>
+						<th>Key</th>
+						<th style="width:300px;">Value</th>
+						<th>操作</th>
+               		 </tr>
+               		 #if($keyvalues)
+               		 	#set($i = 0)
+               		 	#foreach($ele in $keyvalues)
+		               		 <tr #if($i % 2 == 0) class="success" #else class="warning" #end>
+		               		    <td style="font-size:11px;">$!{ele.name}</td>  
+							    <td style="font-size:11px;">$!{ele.key}</td>  
+							    <td style="font-size:11px;width:300px;word-break:break-all;">$!{ele.value}</td>  
+							    <td style="font-size:11px;">
+							    	<a data-id="$!{ele.kvId}" data-action="del_keyvalue" href="#">删除</a>
+							    	<a data-id="$!{ele.kvId}" data-action="edit_keyvalue" live-value="$!{ele.value}" href="#" style="margin-left:12px;">编辑</a>
+							    </td>  
+							 </tr>
+							 #set($i = $i + 1)
+						 #end
+					 #end
+				</table> 
+			  </div>
+			 
+			  <!-- 新建dialog -->
+		      <div class="modal fade" role="dialog" id="add_keyvalue" style="width:400px;top:150px;margin-left:320px;">  
+		            <div class="modal-content">  
+		                <div class="modal-header"> 
+		                    <a class="close" data-dismiss="modal">&times;</a> 
+		                    <h3>新建Keyvalue</h3>   
+		                </div>  
+		                <div class="modal-body">  
+		                    <form action="#" method="post" accept-charset="utf-8">   
+		                        <table class="table">  
+		                            <tr>  
+		                                <td>备注名</td>  
+		                                <td><input type="text" name="phone" id="add_keyvalue_name" value="" class="form-control" placeholder="请输入备注名" /></td>  
+		                            </tr>
+		                            <tr>  
+		                                <td>key</td>  
+		                                <td><input type="text" name="name" id="add_keyvalue_key" value="" class="form-control" placeholder="请输入Key" /></td>  
+		                            </tr>  
+		                            <tr>  
+		                                <td>value</td>  
+		                                <td><input type="text" name="name" id="add_keyvalue_value" value="" class="form-control" placeholder="请输入Value" /></td>  
+		                            </tr>  
+		                            <tr>
+		                            	<td></td>  
+		                                <td><input type="button" name="login" value="新建" id="add_keyvalue_btn"class="btn btn-primary btn-lg btn-block" /></td>  
+		                            </tr>  
+		                        </table>  
+		                    </form>  
+		                </div> 
+		          </div>
+             </div>
+             
+             <!-- 编辑dialog -->
+		     <div class="modal fade" role="dialog" id="edit_keyvalue" data-id="" style="width:400px;top:150px;margin-left:320px;">  
+		            <div class="modal-content">  
+		                <div class="modal-header"> 
+		                    <a class="close" data-dismiss="modal">&times;</a> 
+		                    <h3>编辑</h3>   
+		                </div>  
+		                <div class="modal-body">  
+		                    <form action="#" method="post" accept-charset="utf-8">   
+		                        <table class="table"> 
+		                            <tr>  
+		                                <td>重置Value</td>  
+		                                <td><input type="text" name="name" id="edit_keyvalue_value" value="" class="form-control" placeholder="请输入新的Value" /></td>  
+		                            </tr>  
+		                            <tr>
+		                            	<td></td>  
+		                                <td><input type="button" name="login" value="确定" id="edit_keyvalue_btn"class="btn btn-primary btn-lg btn-block" /></td>  
+		                            </tr>  
+		                        </table>  
+		                    </form>  
+		                </div> 
+		          </div>
+             </div>
+        </div>
+    </div>
+
+	#parse("control/cmn/admin_footer_assets.vm")
+	
+	<!-- Add this page owned js -->
+	<script type="text/javascript" src="/assets/js/live/keyvalue.js?t=20150602"></script>
+</body>
+</html>

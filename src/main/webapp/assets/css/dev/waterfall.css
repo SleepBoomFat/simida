@@ -1,0 +1,86 @@
+/**
+   css
+   @copyright by shaoheng
+   @date 2012-8-21
+*/
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;}
+
+.wf-head{
+    width:1000px;
+    height:50px;
+	background:#A7C0E5;
+	margin:0 auto;
+	margin-top:15px;
+	margin-bottom:20px;
+	border-radius: 10px;
+	box-shadow: 0 2px 4px rgba(0,0,0,.5);
+    -webkit-box-shadow:0 2px 4px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 2px 4px rgba(0,0,0,.5);
+
+}
+
+.wf-hr {
+    width:1000px;
+	color:black;
+    margin:0 auto;
+}
+
+.wf-center{
+	margin: 0 auto;
+	width: 1000px;
+	font-size:20px;
+	font-family:Courier;
+}
+
+.wf-center p {
+   text-align:center;
+   margin:0 auto;
+   margin-bottom:20px;
+}
+.wf-head .reauth {
+    float:left;
+    padding-top: 15px;
+	padding-bottom:7px;
+	padding-left:20px;
+}
+.wf-head .reauth a {
+    text-decoration:none;
+	padding:10px;
+    background-color: transparent;
+    border: 1px solid rgba(44, 44, 44, .6);
+	border-radius:5px;
+	font-size:16px;
+    color:white;
+	font-family:Courier,"Courier New",monospace,"serif","times";
+}
+
+.wf-head .reauth a:hover{
+    color:#E5E5E5;
+}
+
+.wf-head .reauth img{
+}
+
+
+/**center*/
+
+.wf-content{
+   width:1200px;
+   margin:0 auto;
+
+}
+
+.pic-info{
+
+}
+
+.pic-action {
+   margin-left:8px;
+   margin-top:6px;
+}
+
+.trigger {
+   border: 1px solid rgba(44, 44, 44, .6);
+   border-radius:4px;
+   padding:4px;
+}

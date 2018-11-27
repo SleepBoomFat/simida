@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="GB18030"?>
+<configuration>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<target>System.out</target>
+		<encoding>utf8</encoding>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d %-5level %logger{36} - %msg%n</pattern>
+		</layout>
+	</appender>
+
+	<appender name="ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/admin-all.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/admin-all.%d{yyyy-MM-dd}.log.zip
+			</fileNamePattern>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d %-5level %logger{36} - %msg%n</pattern>
+		</layout>
+	</appender>
+
+	<appender name="ERROR_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="com.geekint.honey.base.logger.ERRORLevelFilter" />
+		<file>${LOG_HOME}/admin-error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/admin-error.%d{yyyy-MM-dd}.log.zip
+			</fileNamePattern>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d %-5level %logger{36} - %msg%n</pattern>
+		</layout>
+	</appender>
+
+	<logger name="com.geekint" level="DEBUG" additivity="true">
+		<appender-ref ref="ERROR_APPENDER" />
+	</logger>
+	<root level="INFO">
+		<appender-ref ref="ALL" />
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>

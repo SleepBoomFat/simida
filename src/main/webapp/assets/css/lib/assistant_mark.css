@@ -1,0 +1,27 @@
+.mark-title {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.mark-title .col-md-2 {
+    padding-top: 8px;
+}
+
+.tag-box {
+    border: 1px solid #dbdbdb;
+    padding: 5px;
+    height: 500px;
+    overflow: scroll;
+}
+
+.tag-box .col-md-4 {
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+.tag-box .label {
+    display: inline-block;
+    height:100%;
+    width: 100%;
+    padding-top: 20px;
+}

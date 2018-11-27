@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.roncoo.eshop.cache.dao.UserDao">
+	<resultMap type="com.roncoo.eshop.cache.model.User" id="userMap">
+		<id property="uid" column="uid"/>
+		<result property="userName" column="username"/>
+		<result property="userAccount" column="useraccount"/>
+		<result property="password" column="password"/>
+		<collection property="roles" ofType="com.roncoo.eshop.cache.model.Role">
+			<id property="rid" column="rid"/>
+			<result property="rname" column="rname"/>
+			<collection property="modules" ofType="com.roncoo.eshop.cache.model.Module">
+				<id property="mid" column="mid"/>
+				<result property="mname" column="mname"/>
+			</collection>
+		</collection>
+	</resultMap>
+  	<select id="find" resultType="com.roncoo.eshop.cache.model.User">
+		select username from user;
+  	</select>
+	<select id="findByAccount"  resultMap="userMap">
+        SELECT u.*,r.*,m.* FROM user u inner join user_role ur on ur.uid=u.uid
+        inner join role r on r.rid=ur.rid
+        inner join module_role mr on mr.rid=r.rid
+        inner join module m on mr.mid=m.mid
+        WHERE useraccount=#{account};
+    </select>
+</mapper>

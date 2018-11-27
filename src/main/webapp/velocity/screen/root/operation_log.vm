@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+	<!-- Add Title -->
+    <title>操作日志</title>
+    
+	#parse("control/cmn/admin_top_assets.vm")
+	
+	<!-- Add this page owned css -->
+	
+</head>
+
+<body>
+    <div id="wrapper">
+    
+    	#parse("control/cmn/admin_top_nav.vm")
+    	#parse("control/cmn/admin_left.vm")
+    	
+        <div id="page-wrapper">
+        	 <!-- tab -->
+        
+        	   <nav  class="navbar navbar-default" role="navigation">
+		            <div class="container-fluid">
+		            	<td>
+	                          <select class="selectpicker btn-default btn-large form-control" id="search_keywords" style="width:100px;float:left;margin-top:8px;">
+						         <option value="0"  #if("$!{option}" == "0") selected="selected" #end text="账户名">账户名</option>
+						         <option value="1"  #if("$!{option}" == "1") selected="selected" #end text="service">Service</option>
+						         <option value="2"  #if("$!{option}" == "2") selected="selected" #end text="method">方法名</option>
+						         <option value="3"  #if("$!{option}" == "3") selected="selected" #end text="params">关键参数</option>
+							  </select>
+	                    </td>
+	                    <input type="text" id="query" value="$!{query}" class="form-control" style="float:left;margin-left:10px;width:160px;margin-top:8px;" placeholder="请输入查询关键字"/>
+		                <button type="button" class="btn btn-default navbar-btn chour" data-rel="hour" id="tag_search" style="margin-top:8px;margin-left:12px;">搜索</button>
+		            </div>
+		        </nav>
+			 	
+		     <div style="margin-top:20px;">
+	               	<table class="table table-bordered" id="all_accounts">
+	               		 <tr class="error">
+	               		 	<th>账号</th>
+							<th>Service</th>
+							<th>方法名</th>
+							<th>操作关键词</th>
+							<th>操作时间</th>
+	               		 </tr>
+	               		 #if($results)
+	               		 	#set($i = 0)
+	               		 	#foreach($ele in $results)
+			               		 <tr #if($i % 2 == 0) class="success" #else class="warning" #end>
+			               		    <td>$!{ele.account}</td>  
+								    <td>$!{ele.service}</td>
+								    <td>$!{ele.method}</td>
+								    <td>$!{ele.params}</td>     
+								    <td>$ctool.formatDate($!{ele.ctime},'yyyy-MM-dd HH:mm:ss')}</td>  
+								 </tr>
+								 #set($i = $i + 1)
+							 #end
+						 #end
+				     </table> 
+				</div>
+                	
+        </div>
+    </div>
+
+	#parse("control/cmn/admin_footer_assets.vm")
+	
+	<!-- Add this page owned js -->
+	<script type="text/javascript">
+		$("#tag_search").on('click',function(){
+			event.preventDefault();
+			var keywords = $("#search_keywords").val();
+			var query = $("#query").val();
+			var params = "?query=" + query + "&type=" + keywords;
+			window.location.href = "/admin/i_root_query/operation_log" + params;
+		});
+	</script>
+</body>
+</html>

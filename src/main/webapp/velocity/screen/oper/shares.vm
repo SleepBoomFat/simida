@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+	<!-- Add Title -->
+    <title>分享配置</title>
+    
+	#parse("control/cmn/admin_top_assets.vm")
+	
+	<!-- Add this page owned css -->
+	
+</head>
+
+<body>
+    <div id="wrapper">
+    
+    	#parse("control/cmn/admin_top_nav.vm")
+    	#parse("control/cmn/admin_left.vm")
+    	
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                
+                <!-- tab -->
+                #parse("control/tab/oper.vm")
+               
+                <!-- Add your page content here -->
+
+                <div style="margin-left:0px;margin-top:12px;">
+                    <a data-toggle="modal" data-target="#add_share_form" href="#" class="btn btn-primary btn-large">新增分享类型</a>
+                </div>
+
+                <!-- 表格数据 -->
+                <div style="margin-top:20px;">
+                    <table class="table table-bordered">
+                        <tr class="error">
+                            <th>编号</th>
+                            <th>分享类型</th>
+                            <th>标题</th>
+                            <th>内容</th>
+                            <th>图片</th>
+                            <th>跳转地址</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        #if($shares)
+                            #set($i = 0)
+                            #foreach($ele in $shares)
+                                <tr #if($i % 2 == 0) class="success" #else class="warning" #end data-id="$!{ele.id}" data-type="$!{ele.type}" data-typeName="$!{ele.typeName}" data-title="$!{ele.title}" data-img="$!{ele.img}" data-content="$!{ele.content}" data-link="${ele.link}" data-time="$!{ele.ctime}">
+                                    <td style="font-size:11px;width:200px;word-break:break-all;">$!{ele.id}</td>
+                                    <td>$!{ele.type}-$!{ele.typeName}</td>
+                                    <td>$!{ele.title}</td>
+                                    <td>$!{ele.content}</td>
+                                    <td style="font-size:11px;"><img src="$!{ele.img}"  width=50 height=50/></td>
+                                    <td>$!{ele.link}</td>
+                                    <td>$!{ctool.formatDate($ele.ctime,"yyyy-MM-dd HH:mm:ss")}</td>
+                                    <td style="font-size:11px;">
+                                        <a data-action="del" href="#">删除</a> &nbsp;&nbsp;|&nbsp;&nbsp;
+                                        <a data-action="edit" href="#" style="">编辑</a>
+                                    </td>
+                                </tr>
+                                #set($i = $i + 1)
+                            #end
+                        #end
+                    </table>
+                </div>
+
+                <!-- 新增分享 start -->
+                <div class="modal fade" role="dialog" id="add_share_form" style="width:720px;top:20px;margin-left:300px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a class="close" data-dismiss="modal">&times;</a>
+                            <h3>新增分享</h3>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#" method="post" accept-charset="utf-8">
+                                <table class="table">
+                                    <tr>
+                                        <td>标题</td>
+                                        <td><input type="text" name="phone" id="add_share_title" value="" class="form-control" placeholder="请输入分享标题" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>类型</td>
+                                        <td>
+                                            <select class="selectpicker btn-default btn-large form-control" id="add_share_type" style="width:100px;float:left;margin-top:8px;">
+                                                #if($shareTypes)
+                                                    #foreach($st in $shareTypes)
+                                                        <option value="$!{st.type}">$!{st.name}</option>
+                                                    #end
+                                                #end
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>内容</td>
+                                        <td><input type="text" name="phone" id="add_share_content" value="" class="form-control" placeholder="请输入分享内容" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>分享图片</td>
+                                        <td>
+                                            <button type="button" id="upload_add_share_img" class="btn btn-default cancel" style="margin-left:0px;">上传图片</button>
+                                            <img src="#" id="add_share_img" style="width:30px;height:30px;margin-left:15px;display:none;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>跳转地址</td>
+                                        <td><input type="text" name="phone" id="add_share_link" value="" class="form-control" placeholder="请输入跳转地址" /></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td><input type="button" name="add_confirm" value="添加" id="add_share_btn" class="btn btn-primary btn-lg btn-block" /></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+	<!-- Add this page owned js -->
+    <script type="text/javascript" src="/assets/js/lib/ajaxupload.3.5.js"></script>
+    <script type="text/javascript">
+
+        new AjaxUpload($("#upload_add_share_img"),{
+            action: '/admin/i_tool_action/upload_pic',
+            data:{
+
+            },
+            name: 'data',
+            timeout:120000,
+            onSubmit: function(file,ext) {
+                if(!(ext && /^(png|jpeg|jpg|webp)$/.test(ext))) {
+                    alert("您上传的图片格式有误，请重新选择！");
+                    return false;
+                }
+            },
+            onComplete:function(file,resp){
+                var obj = jQuery.parseJSON(resp);
+                if(obj.code == 0){
+                    $("#add_share_img").attr('src',obj.result);
+                    $("#add_share_img").css('display',"inline");
+                }else{
+                    alert('上传失败:' + obj.msg);
+                }
+            }
+        });
+
+        //添加分享
+        $("#add_share_btn").on('click',function(){
+
+            var id = $("#add_share_form").attr('data-id');
+            var title = $("#add_share_title").val();
+            var type = $("#add_share_type").val()
+            var content = $("#add_share_content").val();
+            var img = $("#add_share_img").attr("src");
+            var link = $("#add_share_link").val();
+
+            $.ajax({
+                type:"POST",
+                url:"/admin/i_oper_action/add_or_updateshare",
+                data: {
+                    id:id,
+                    title:title,
+                    type: type,
+                    content:content,
+                    img:img,
+                    link:link
+                },
+                timeout:180000,
+                dataType:"json",
+                processData:true,
+                success: function(msg){
+                    if(msg.code == 0){
+                        window.location.href="/admin/i_oper_query/shares"
+                    }else{
+                        alert(msg.msg);
+                    }
+                }
+            });
+        });
+
+        $("#add_share_form").on("hidden.bs.modal",function(){
+            $("#add_share_form").attr('data-id',"");
+            $("#add_share_title").val("");
+            $("#add_share_type").val("")
+            $("#add_share_img").attr("src","");
+            $("#add_share_img").css('display',"none");
+            $("#add_share_content").val("");
+            $("#add_share_link").val("");
+        });
+
+        //编辑
+        $(document).on("click","a[data-action='edit']",function(){
+            var id = $(this).parent().parent().attr('data-id');
+            var type = $(this).parent().parent().attr('data-type');
+            // var typeName = $(this).parent().parent().attr('data-typeName');
+            var title = $(this).parent().parent().attr('data-title');
+            var img = $(this).parent().parent().attr('data-img');
+            var content = $(this).parent().parent().attr('data-content');
+            var link = $(this).parent().parent().attr('data-link');
+            // var time = $(this).parent().parent().attr('data-ctime');
+
+            $("#add_share_form").attr('data-id',id);
+            $("#add_share_title").val(title);
+            $("#add_share_type").val(type);
+
+            if(img != "") {
+                $("#add_share_img").attr("src",img);
+                $("#add_share_img").css('display',"inline");
+            }
+            $("#add_share_content").val(content);
+            $("#add_share_link").val(link);
+
+            $("#add_share_form").modal("show");
+        });
+
+        //删除
+        $(document).on("click","a[data-action='del']",function(){
+            var id = $(this).parent().parent().attr('data-id');
+            var entry = $(this).parent().parent();
+            if(!confirm("是否确认删除")){
+                return;
+            }
+            $.ajax({
+                type:"POST",
+                url:"/admin/i_oper_action/delete_share",
+                data: {
+                    id:id
+                },
+                timeout:180000,
+                dataType:"json",
+                processData:true,
+                success: function(msg){
+                    if(msg.code == 0){
+                        entry.remove();
+                    }else{
+                        alert(msg.msg);
+                    }
+                }
+            });
+        });
+    </script>
+
+	#parse("control/cmn/admin_footer_assets.vm")
+
+</body>
+</html>

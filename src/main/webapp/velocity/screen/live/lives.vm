@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+	<!-- Add Title -->
+    <title>直播列表</title>
+    
+	#parse("control/cmn/admin_top_assets.vm")
+	
+	<!-- Add this page owned css -->
+	
+</head>
+
+<body>
+    <div id="wrapper">
+    
+    	#parse("control/cmn/admin_top_nav.vm")
+    	#parse("control/cmn/admin_left.vm")
+    	
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                
+                <!-- tab -->
+                #parse("control/tab/live.vm")
+               
+                <!-- Add your page content here -->
+                 <div style="margin-left:0px;margin-top:12px;">
+		 				<a data-toggle="modal" data-target="#add_live" href="#" class="btn btn-default navbar-btn chour">新增直播</a>
+		 		 </div>
+			      
+				 <!-- 表格数据 -->
+	             <div style="margin-top:20px;">
+	               	<table class="table table-bordered">
+	               		 <tr class="error">
+	               		 	<th style="font-size:11px;">封面</th>
+							<th style="font-size:11px;">主题</th>
+							<th style="font-size:11px;">类型</th>
+							<th style="font-size:11px;">流地址</th>
+							<th style="font-size:11px;">奖金</th>
+							<th style="font-size:11px;">开场时间</th>
+							<th style="font-size:11px;">主持人</th>
+							<th style="font-size:11px;">状态</th>
+							<th style="font-size:11px;">是否上架</th>
+							<th style="font-size:11px;">操作</th>
+	               		 </tr>
+	               		 #if($lives)
+	               		 	#set($i = 0)
+	               		 	#foreach($ele in $lives)
+			               		 <tr #if($i % 2 == 0) class="success" #else class="warning" #end data-show="$!{ele.show}" data-title="$!{ele.title}" data-streamType="$!{ele.streamType}" data-status="$!{ele.status}" data-startTime="$!{ele.startTime}" data-money="$!{ele.money}" data-type="$!{ele.type}" data-streamUrl="$!{ele.streamUrl}" data-id="${ele.id}" data-cover="$!{ele.cover}" data-presenter="$!{ele.presenter.uid}">
+			               		    <td style="font-size:11px;"><img src="$!{ele.cover}"  width=50 height=50/></td>  
+								    <td style="font-size:11px;width:180px;word-break:break-all;">$!{ele.title}</td>  
+								    <td style="font-size:11px;">
+								    	#if($ele.type == 1)
+								    		一字千金
+								    	#end
+								    </td>  
+								    <td style="font-size:11px;">$!{ele.streamUrl}</td>
+								    <td style="font-size:11px;">$!{ele.money}元</td>
+								    <td style="font-size:11px;">$ctool.formatDate($ele.startTime,"MM-dd HH:mm")</td>
+								    <td style="font-size:11px;"><a href="#">$!{ele.presenter.nick}</a></td>
+								    <td style="font-size:11px;">
+								    	#if($ele.status == 1)
+								    		等待中
+								    	#elseif($ele.status == 2)
+								    		进行中
+								    	#elseif($ele.status == 3)
+								    		已结束
+								    	#end
+								    </td>
+								    <td style="font-size:11px;">
+								    	#if($ele.show)
+								    		是
+								    	#else
+								    		否
+								    	#end
+								    </td>
+								    <td style="font-size:11px;">
+								    	<a data-action="del" href="#">删除</a> &nbsp;&nbsp;|&nbsp;&nbsp;
+								    	<a data-action="edit" href="#" style="">编辑</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+								    	<a href="/admin/i_live_query/topics?liveId=$!{ele.id}" target="_blank">管理题目</a>&nbsp;&nbsp;
+								    	#if($ele.status == 1 || $ele.status == 2)
+								    		|&nbsp;&nbsp;
+								    		<a href="/admin/i_live_query/living?liveId=$!{ele.id}" style="" target="_blank">直播控制</a>
+								    	#end
+								    </td>  
+								 </tr>
+								 #set($i = $i + 1)
+							 #end
+						 #end
+					</table> 
+				  </div>
+				 
+				  <!-- 新增直播 start -->
+			      <div class="modal fade" role="dialog" id="add_live" style="width:720px;top:20px;margin-left:300px;">  
+			            <div class="modal-content">  
+			                <div class="modal-header"> 
+			                    <a class="close" data-dismiss="modal">&times;</a> 
+			                    <h3>新增直播</h3>   
+			                </div>  
+			                <div class="modal-body">  
+			                    <form action="#" method="post" accept-charset="utf-8">   
+			                        <table class="table">
+			                            <tr>  
+			                                <td>主题</td>  
+			                                <td><input type="text" name="phone" id="add_live_title" value="" class="form-control" placeholder="请输入直播主题" /></td>  
+			                            </tr>
+			                            <tr>
+			                            	<td>开场时间</td>  
+			                                <td>
+			                                	<input type="text" id="add_live_startTime" class="form-control datebox form_datetime" value="" date-date-form="yyyy-MM-dd HH:ii" placeholder="请选择开场时间" style="width:180px; display:inline;"/>
+			                                </td>
+			                            </tr> 
+			                            <tr>  
+			                                <td>主持人</td>  
+			                                <td>
+			                                	<select class="selectpicker btn-default btn-large form-control" id="add_live_presenter" style="width:100px;float:left;margin-top:8px;">
+											         
+												</select>
+			                                </td>  
+			                            </tr>
+			                            <tr>  
+			                                <td>是否上架</td>  
+			                                <td>
+			                                	<select class="selectpicker btn-default btn-large form-control" id="add_live_show" style="width:100px;float:left;margin-top:8px;">
+											         <option value="true">是</option>
+											         <option value="false">否</option>
+												</select>
+			                                </td>  
+			                            </tr>
+			                            <tr>  
+			                                <td>直播类型</td>  
+			                                <td>
+			                                	<select class="selectpicker btn-default btn-large form-control" id="add_live_type" style="width:100px;float:left;margin-top:8px;">
+											         <option value="1">一字千金</option>
+												</select>
+			                                </td>  
+			                            </tr> 
+			                            <tr>  
+			                                <td>封面</td>  
+			                                <td>
+			                                	<button type="button" id="upload_add_live_cover" class="btn btn-default cancel" style="margin-left:0px;">上传封面</button>
+	                      						<img src="#" id="add_live_cover" style="width:30px;height:30px;margin-left:15px;"/>
+			                                </td>  
+			                            </tr>  
+			                            <tr>  
+			                                <td>直播流</td>  
+			                                <td>
+			                                	<select class="selectpicker btn-default btn-large form-control" id="add_live_streamType" style="width:100px;float:left;margin-top:8px;">
+											         <option value="1">腾讯</option>
+												</select>
+			                                </td>  
+			                            </tr>
+			                            <tr>
+			                            	<td></td>  
+			                                <td><input type="button" name="login" value="确定" id="add_live_btn"class="btn btn-primary btn-lg btn-block" /></td>  
+			                            </tr>  
+			                        </table>  
+			                    </form>  
+			                </div> 
+			          </div>
+	             </div>
+	             <!-- 新增直播 end -->
+                
+            </div>
+        </div>
+    </div>
+
+	<script type="text/javascript" src="/assets/js/lib/ajaxupload.3.5.js"></script>
+	<script src="/assets/js/lib/bootstrap-datetimepicker.min.js" charset="utf-8" type="text/javascript"></script>
+	<link href="/assets/css/lib/bootstrap-datetimepicker.css" type="text/css" rel="stylesheet" />
+
+	<!-- Add this page owned js -->
+	<script type="text/javascript">
+		$('.form_datetime').datetimepicker({
+	        format: 'yyyy-mm-dd hh:ii',
+	        weekStart: 1,
+	        todayBtn:  1,
+	        autoclose: 1,
+	        todayHighlight: 1,
+	        startView: 2,
+	        forceParse: 0,
+	        showMeridian: 1,
+	        pickerPosition: "bottom-right"
+	    });
+	    
+	    $.getJSON("/admin/i_live_query/getPresenters",function(ele){
+	    	if(ele.code == 0 && ele.result){
+	    		var html = "";
+	    		for(var i = 0;i < ele.result.length;i++){
+	    			html += "<option value='"+ele.result[i].uid+"'>"+ele.result[i].nick+"</option>";
+	    		}
+	    		$("#add_live_presenter").html(html);
+	    	}
+	    });
+	    
+		new AjaxUpload($("#upload_add_live_cover"),{  
+		   	 action: '/admin/i_tool_action/upload_pic',  
+	         data:{
+	         
+	         },  
+	         name: 'data',
+	         timeout:120000,
+	         onSubmit: function(file,ext) {
+	            if(!(ext && /^(png|jpeg|jpg|webp)$/.test(ext))) {  
+	                alert("您上传的图片格式有误，请重新选择！");  
+	                return false;  
+	            }  
+	         },
+	         onComplete:function(file,resp){
+	           var obj = jQuery.parseJSON(resp);
+	           if(obj.code == 0){
+	        	   $("#add_live_cover").attr('src',obj.result);
+	        	   $("#add_live_cover").css('display',"inline");
+	           }else{
+	           	  alert('上传失败:' + obj.msg);
+	           }
+	        }
+		});
+		
+		//添加直播
+		$("#add_live_btn").on('click',function(){
+			var id = $("#add_live").attr('data-id');
+			var type = $("#add_live_type").val();
+			var title = $("#add_live_title").val();
+			var cover = $("#add_live_cover").attr("src");
+			var streamType = $("#add_live_streamType").val();
+			var presenterId = $("#add_live_presenter").val();
+			var show = $("#add_live_show").val();
+			var startTime = 0;
+	        if($.trim($("#add_live_startTime").val()) != ""){
+	            startTime = new Date($("#add_live_startTime").val()).getTime();
+	        }
+			$.ajax({
+				 type:"POST",
+				 url:"/admin/i_live_action/add_or_updatelive",
+				 data: {
+				 	id:id,
+				 	type:type,
+				 	title:title,
+				 	cover:cover,
+				 	streamType:streamType,
+				 	startTime:startTime,
+				 	presenterId:presenterId,
+				 	show:show
+				 },
+				 timeout:180000,
+				 dataType:"json",
+				 processData:true,
+				 success: function(msg){
+					 if(msg.code == 0){
+						 window.location.href="/admin/i_live_query/lives"
+					 }else{
+					 	alert(msg.msg);
+					 }
+				 }
+			});
+		});
+		
+		$("#add_live").on("hidden.bs.modal",function(){
+			$("#add_live").attr('data-id',"");
+			$("#add_live_type").val("1");
+			$("#add_live_title").val("");
+			$("#add_live_cover").attr("src","");
+			$("#add_live_streamType").val("1");
+			$("#add_live_show").val("true");
+			$("#add_live_startTime").val("")
+			
+			$("#add_live_money").removeAttr("readonly");
+		});
+	
+		$("#add_live").on("show.bs.modal",function(){
+			
+		});
+		
+		$(document).on("click","a[data-action='edit']",function(){
+			var id = $(this).parent().parent().attr('data-id');
+			var type = $(this).parent().parent().attr('data-type');
+			var cover = $(this).parent().parent().attr('data-cover');
+			var title = $(this).parent().parent().attr('data-title');
+			var streamType = $(this).parent().parent().attr('data-streamtype');
+			var startTime = $(this).parent().parent().attr('data-starttime');
+			var presenter = $(this).parent().parent().attr('data-presenter');
+			var show = $(this).parent().parent().attr('data-show');
+			
+			$("#add_live").attr('data-id',id);
+			$("#add_live_type").val(type);
+			$("#add_live_title").val(title);
+			$("#add_live_cover").attr("src",cover);
+			$("#add_live_streamType").val(streamType);
+			$("#add_live_show").val(show == "true" ? "true" : "false");
+			$("#add_live_presenter").val(presenter);
+			$("#add_live_startTime").val(new Date(Number(startTime)).Format("yyyy-MM-dd HH:mm"));
+			
+			$("#add_live_streamType").attr("readonly","readonly");
+			$("#add_live_type").attr("readonly","readonly");
+			
+			$("#add_live").modal("show");
+		});
+		
+		$(document).on("click","a[data-action='del']",function(){
+			var id = $(this).parent().parent().attr('data-id');
+			var entry = $(this).parent().parent();
+			if(!confirm("是否确认删除")){
+				return;
+			}
+			$.ajax({
+				 type:"POST",
+				 url:"/admin/i_live_action/delete_live",
+				 data: {
+				 	id:id
+				 },
+				 timeout:180000,
+				 dataType:"json",
+				 processData:true,
+				 success: function(msg){
+					 if(msg.code == 0){
+						entry.remove();
+					 }else{
+					 	alert(msg.msg);
+					 }
+				 }
+			});
+		});
+	</script>
+	#parse("control/cmn/admin_footer_assets.vm")
+</body>
+</html>

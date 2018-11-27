@@ -1,0 +1,12 @@
+/**
+ * copyright geekint.com
+ * author bruce.shaoheng@gmail.com
+ */
+/** common */
+body{
+	background: #f9f9f9 url("/assets/img/body_bg.png");
+}
+
+.clearfix {
+	display: block;
+}

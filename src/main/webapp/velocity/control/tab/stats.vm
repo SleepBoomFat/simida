@@ -1,0 +1,4 @@
+<ul class="nav nav-tabs">
+	<li #if($!{tab} == "ranks") class="active"    #end>  <a #if($!{tab} == "ranks")   href="#" #else href="/admin/i_oper_query/ranks"  #end>排行榜</a></li>
+</ul>
+

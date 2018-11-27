@@ -1,0 +1,228 @@
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <!-- Add Title -->
+    <title>消息推送</title>
+
+    #parse("control/cmn/admin_top_assets.vm")
+    <!-- Add this page owned css -->
+
+</head>
+
+<body>
+<div id="wrapper">
+
+    #parse("control/cmn/admin_top_nav.vm")
+    #parse("control/cmn/admin_left.vm")
+
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            #parse("control/tab/push.vm")
+
+            <div style="margin-left:1px;margin-top:20px;">
+                <a href="#" class="btn btn-primary btn-large" data-toggle="modal" data-target="#add_notify_dialog">新建推送</a>
+            </div>
+
+            <!-- 表格数据 -->
+            <div style="margin-top:20px;">
+                <table class="table table-bordered" id="container" style="word-break:break-all;">
+                    <tr class="error">
+                        <th>推送对象</th>
+                        <th style="width:120px;">消息类型</th>
+                        <th style="width:120px;">标题</th>
+                        <th>推送时间</th>
+                        <th>创建时间</th>
+                        <th style="width: 85px;">操作</th>
+                    </tr>
+
+                    #if($notifies)
+                        #set($i = 0)
+                        #foreach($notify in $notifies)
+                            <tr #if($i % 2 == 0) class="success" #else class="warning" #end data-id="$!{notify.uid}" data-sendTo="$!{notify.sendTo}" data-tplID="$!{notify.tplID}" data-tplTitle="$!{notify.tplTitle}" data-name="$!{notify.name}" data-ptime="$!{notify.ptime}">
+                                <td style="width:240px;word-break:break-all;">$!{notify.sendTo}</td>
+                                <td style="width:120px;word-break:break-all;">$!{notify.tplTitle}</td>
+                                <td style="width:120px;word-break:break-all;height: 50px; overflow: scroll">$!{notify.name}</td>
+                                <td>$ctool.formatDate($!{notify.ptime},'yyyy-MM-dd HH:mm')</td>
+                                <td>$ctool.formatDate($!{notify.ctime},'yyyy-MM-dd HH:mm')</td>
+                                <td style="font-size:11px;">
+                                    <a data-action="del" href="#">删除</a> &nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <a data-action="edit" href="#" style="">编辑</a>
+                                </td>
+                            </tr>
+                            #set($i = $i + 1)
+                        #end
+                    #end
+                </table>
+            </div>
+
+            <div class="modal fade" id="add_notify_dialog" role="dialog" style="width:720px;top:20px;margin-left:300px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a class="close" data-dismiss="modal">&times;</a>
+                            <h5>推送消息</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#" method="post" accept-charset="utf-8">
+                                <table class="table">
+                                    <tr>
+                                        <td><p style="margin-top:8px;">发送者(可选))</p></td>
+                                        <td><input type="text" id="add_push_sendTo" class="form-control" placeholder="可选" value="5785140a63b22137c74db521"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p style="margin-top:8px;">消息类型</p>
+                                        </td>
+                                        <td>
+                                            <select class="selectpicker btn-default btn-large form-control" id="add_push_tpl" style="width:150px;float:left;margin-top:8px;">
+                                                #if($tpls)
+                                                    #foreach($tpl in $tpls)
+                                                        <option value="$!{tpl.template_id}">$!{tpl.title}</option>
+                                                    #end
+                                                #end
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><p style="margin-top:8px;">标题</p></td>
+                                        <td>
+                                            <textarea rows="2" cols="20" class="form-control" id="add_push_title" placeholder="长度不得超过50个字符(中文)" ></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><p style="margin-top:8px;">推送时间</p></td>
+                                        <td><input type="text" id="add_push_pubtime" class="form-control datebox form_datetime" value="" date-format="yyyy-MM-dd HH:ii"  placeholder="选择推送计时间" style="width:180px; display:inline;" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><input type="button" name="add_notify" value="添加" id="add_push_btn" class="btn btn-primary btn-lg btn-block"  /></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    #parse("control/cmn/admin_footer_assets.vm")
+
+<!-- Add this page owned js -->
+<script src="/assets/js/lib/bootstrap-datetimepicker.min.js" charset="utf-8" type="text/javascript"></script>
+<link href="/assets/css/lib/bootstrap-datetimepicker.css" type="text/css" rel="stylesheet" />
+<script>
+
+    $('.form_datetime').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1,
+        pickerPosition: "bottom-right"
+    });
+
+    $("#add_push_btn").on('click',function() {
+
+        var id = $("#add_notify_dialog").attr('data-id');
+        var sendTo = $("#add_push_sendTo").val();
+        var tplID = $("#add_push_tpl").val();
+        var tplTitle = $("#add_push_tpl option:selected").text();
+        var name = $("#add_push_title").val();
+
+        if(tplID == ""){
+            alert("消息类型不能为空")
+            return
+        }
+
+        var pTime = 0;
+        if($.trim($("#add_push_pubtime").val()) != ""){
+            pTime = new Date($("#add_push_pubtime").val()).getTime();
+        }
+        $.ajax({
+            method: "POST",
+            url: "/admin/i_oper_action/add_or_update_push",
+            data: {
+                id: id,
+                sendTo: sendTo,
+                name: name,
+                tplID: tplID,
+                tplTitle: tplTitle,
+                pTime: pTime
+            },
+            dataType: "json",
+            success: function (info) {
+                console.log(info);
+                if (info.code == -91) {
+                    alert("失败");
+                } else if (info.code == 0) {
+                    // success
+                    window.location.href="/admin/i_oper_query/push"
+                } else {
+                    alert(info.message)
+                }
+            }
+        })
+    })
+
+    $("#add_notify_dialog").on("hidden.bs.modal",function(){
+        $("#add_notify_dialog").attr('data-id',"");
+        $("#add_push_sendTo").val("");
+        $("#add_push_tpl").val("")
+        $("#add_push_title").val("");
+        $("#add_push_pubtime").val("")
+    });
+
+    //编辑
+    $(document).on("click","a[data-action='edit']",function(){
+        var id = $(this).parent().parent().attr('data-id');
+        var sendTo = $(this).parent().parent().attr('data-sendTo');
+        var tplID = $(this).parent().parent().attr('data-tplID');
+        // var tplTitle = $(this).parent().parent().attr('data-tplTitle');
+        var name = $(this).parent().parent().attr('data-name');
+        var ptime = $(this).parent().parent().attr('data-ptime');
+
+        $("#add_notify_dialog").attr('data-id',id);
+        $("#add_push_sendTo").val(sendTo);
+        $("#add_push_tpl").val(tplID);
+        $("#add_push_title").val(name);
+        $("#add_push_pubtime").val(new Date(Number(ptime)).Format("yyyy-MM-dd HH:mm"));
+
+        $("#add_notify_dialog").modal("show");
+    });
+
+    //删除
+    $(document).on("click","a[data-action='del']",function(){
+        var id = $(this).parent().parent().attr('data-id');
+        var entry = $(this).parent().parent();
+        if(!confirm("是否确认删除")){
+            return;
+        }
+        $.ajax({
+            type:"POST",
+            url:"/admin/i_oper_action/delete_push",
+            data: {
+                id:id
+            },
+            timeout:180000,
+            dataType:"json",
+            processData:true,
+            success: function(msg){
+                if(msg.code == 0){
+                    entry.remove();
+                }else{
+                    alert(msg.msg);
+                }
+            }
+        });
+    });
+
+</script>
+</body>
+</html>
